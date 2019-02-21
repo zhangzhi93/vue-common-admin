@@ -1,29 +1,56 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <el-container style="min-width: 1198px;">
+      <Header />
+      <el-container class="main-container">
+        <Slider />
+        <el-main>
+          <router-view />
+        </el-main>
+      </el-container>
+    </el-container>
   </div>
 </template>
+<script>
+import { mapMutations } from 'vuex'
+import Header from "./components/Header.vue";
+import Slider from "./components/Slider"
 
-<style lang="less">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
+export default {
+  name: 'app',
+  components: {
+    Header,
+    Slider
+  },
+  watch: {
+    '$route'(to, from) {
+      const MenuArray = to.fullPath.split('/');
+      this.activeMenu({
+        FMenu: `/${MenuArray[1]}`,
+        SMenu: to.fullPath
+      })
     }
+  },
+  methods: {
+    ...mapMutations({
+      subMenuHandler: 'GET_SUB_MENULIST',
+      activeMenu: 'GET_ACTIVE_MENU'
+    }),
+  },
+  mounted() {
+    const MenuArray = this.$route.fullPath.split('/');
+    const FMenu = `/${MenuArray[1]}`;
+    this.subMenuHandler(FMenu);
+    this.activeMenu({
+      FMenu,
+      SMenu: this.$route.fullPath
+    })
   }
+};
+</script>
+<style lang="less" scoped>
+.main-container {
+  height: calc(~"100vh - 61px");
+  margin-top: 61px;
 }
 </style>
