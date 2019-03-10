@@ -1,45 +1,39 @@
 <template>
-  <div class="header">
+  <el-header class="header">
     <div class="logo">
       <i class="el-icon-goods"></i>
+      <span>管理系统</span>
     </div>
     <el-menu :default-active="getActiveMenu.FMenu"
       mode="horizontal"
       menu-trigger="click"
-      @select="handleSelect"
-      :router="true"
-      background-color="#545c64"
+      router
+      background-color="#18475f"
       text-color="#fff"
       active-text-color="#ffd04b">
-      <el-menu-item v-for="item in MenuList"
-        :key="item.key"
-        :index="item.index">
-        <i :class="item.icon"></i>
-        <span slot="title">{{item.name}}</span>
+      <el-menu-item v-for="item in getPermissionMenu"
+        :key="item.name"
+        :index="item.path">
+        <i :class="item.meta.icon"></i>
+        <span slot="title">{{item.meta.title}}</span>
       </el-menu-item>
     </el-menu>
-  </div>
+  </el-header>
 </template>
 <script>
-import { mapGetters, mapMutations } from 'vuex'
-import { MenuList } from "../utils/config";
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Header',
   data() {
-    return {
-      MenuList: MenuList
-    };
+    return {};
   },
   computed: {
-    ...mapGetters(['getActiveMenu']),
+    ...mapGetters(['getPermissionMenu', 'getActiveMenu']),
   },
-  methods: {
-    ...mapMutations({
-      subMenuHandler: 'GET_SUB_MENULIST'
-    }),
-    handleSelect(key, keyPath) {
-      this.subMenuHandler(key)
+  watch: {
+    getActiveMenu(val) {
+      console.log(val);
     }
   },
 };
@@ -51,24 +45,21 @@ export default {
   width: 100%;
   z-index: 99;
   overflow: hidden;
-  background-color: rgb(84, 92, 100);
-  border-bottom: solid 1px #e6e6e6;
+  background-color: #18475f;
   .logo {
     float: left;
-    margin: 10px 60px 0 60px;
-    width: 80px;
-    height: 40px;
-    background-color: rgb(90, 102, 120);
     border-radius: 3px;
     text-align: center;
     color: #fff;
-    line-height: 40px;
-  }
-  :global {
-    .el-menu {
-      float: left;
-      border-bottom: none;
+    min-width: 200px;
+    line-height: 60px;
+    i {
+      margin-right: 15px;
     }
+  }
+  .el-menu {
+    float: left;
+    border-bottom: none;
   }
 }
 </style>

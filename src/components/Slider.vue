@@ -1,26 +1,31 @@
 <template>
-  <el-aside width="220px">
-    <el-menu :default-active="getActiveMenu.SMenu"
+  <el-aside width="220px"
+    class="slider-menu">
+    <el-menu :default-active="getActiveMenu.FMenu+getActiveMenu.SMenu"
+      background-color="#F4F4F4"
+      text-color="#222"
+      active-text-color="#1e2221"
       :unique-opened="true"
-      :router="true">
-      <el-menu-item v-for="item in getSubMenuList.MenuList"
-        :index="getSubMenuList.index+item.index"
-        :key="item.key">{{item.name}}</el-menu-item>
+      router>
+      <el-menu-item v-for="item in getSubMenuList.children"
+        :index="getSubMenuList.path+'/'+item.path"
+        :key="item.name">{{item.meta.title}}</el-menu-item>
     </el-menu>
   </el-aside>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
+import { mapGetters } from 'vuex';
 export default {
-  name: 'HomeMenu',
+  name: 'Slider',
   computed: {
     ...mapGetters(['getSubMenuList', 'getActiveMenu']),
   },
-  methods: {
-  }
 };
 </script>
-<style lang="less" scoped>
+
+<style lang="less">
+.slider-menu {
+  border-right: 1px solid #e6e6e6;
+}
 </style>
