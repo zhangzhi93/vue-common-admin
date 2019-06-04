@@ -15,6 +15,9 @@ module.exports = {
     'max-len': 'off',
     'arrow-parens': 'off',
     'arrow-body-style': 'off',
+    'import/no-dynamic-require': 'off',
+    'global-require': 'off',
+    'no-unused-vars': 'warn',
   },
   parserOptions: {
     parser: 'babel-eslint',

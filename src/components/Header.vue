@@ -1,5 +1,6 @@
 <template>
-  <el-header class="header">
+  <el-header height="50px"
+    class="header">
     <div class="logo">
       <i class="el-icon-goods"></i>
       <span>管理系统</span>
@@ -46,16 +47,21 @@ export default {
   z-index: 99;
   overflow: hidden;
   background-color: #18475f;
+  padding: 0;
   .logo {
     float: left;
     border-radius: 3px;
     text-align: center;
     color: #fff;
     min-width: 200px;
-    line-height: 60px;
+    line-height: 50px;
     i {
       margin-right: 15px;
     }
+  }
+  /deep/.el-menu--horizontal > .el-menu-item {
+    height: 50px;
+    line-height: 50px;
   }
   .el-menu {
     float: left;

@@ -1,26 +1,32 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
+import Status from './views/Dashboard/index.vue';
 
 Vue.use(Router);
 
 export const RouterMap = [{
-  path: '/index',
-  redirect: '/index/dashboard',
-  name: 'index',
-  component: Home,
-  meta: {
-    title: '状态概览',
-    nav: ['状态概览'],
-    icon: 'el-icon-menu',
-    roles: [],
-  },
+  path: 'dashboard',
+  redirect: '/dashboard/status',
+  name: 'status',
+  component: Status,
   children: [{
-    path: 'dashboard',
-    name: 'dashboard',
+    path: 'status',
+    name: 'status',
+    component: () => import('./views/Dashboard/status.vue'),
     meta: {
       title: '状态概览',
       nav: ['状态概览', '状态概览'],
+      icon: 'el-icon-menu',
+      roles: [],
+    },
+  }, {
+    path: 'update',
+    name: 'update',
+    component: () => import('./views/Dashboard/update.vue'),
+    meta: {
+      title: '更新日志',
+      nav: ['更新日志', '更新日志'],
       icon: 'el-icon-menu',
       roles: [],
     },
@@ -62,6 +68,8 @@ export const RouterMap = [{
 export default new Router({
   routes: [{
     path: '/',
-    redirect: '/index',
-  }, ...RouterMap],
+    name: 'home',
+    component: Home,
+    children: RouterMap,
+  }],
 });

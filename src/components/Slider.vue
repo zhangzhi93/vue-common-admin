@@ -1,10 +1,9 @@
 <template>
-  <el-aside width="220px"
+  <el-aside width="200px"
     class="slider-menu">
     <el-menu :default-active="getActiveMenu.FMenu+getActiveMenu.SMenu"
-      background-color="#F4F4F4"
-      text-color="#222"
-      active-text-color="#1e2221"
+      text-color="#303133"
+      active-text-color="#409eff"
       :unique-opened="true"
       router>
       <el-menu-item v-for="item in getSubMenuList.children"

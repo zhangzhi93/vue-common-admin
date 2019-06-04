@@ -50,7 +50,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .main-container {
-  height: calc(~"100vh - 61px");
-  margin-top: 61px;
+  height: calc(~"100vh - 51px");
+  margin-top: 51px;
 }
 </style>
