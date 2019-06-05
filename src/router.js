@@ -10,6 +10,12 @@ export const RouterMap = [{
   redirect: '/dashboard/status',
   name: 'status',
   component: Status,
+  meta: {
+    title: '状态概览',
+    nav: ['状态概览'],
+    icon: 'el-icon-menu',
+    roles: [],
+  },
   children: [{
     path: 'status',
     name: 'status',
