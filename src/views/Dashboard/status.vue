@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-row gutter="20">
+    <el-row :gutter="20">
       <el-col :span="6">
         <el-card :body-style="{ padding: '0px' }"
           class="user-card">
@@ -55,7 +55,7 @@
 </template>
 <script>
 export default {
-  name: 'Dashboard',
+  name: 'status',
   data() {
     return {
       currentDate: new Date(),

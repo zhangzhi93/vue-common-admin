@@ -8,7 +8,7 @@ Vue.use(Router);
 export const RouterMap = [{
   path: 'dashboard',
   redirect: '/dashboard/status',
-  name: 'status',
+  name: 'dashboard',
   component: Status,
   meta: {
     title: '状态概览',
@@ -38,7 +38,7 @@ export const RouterMap = [{
     },
   }],
 }, {
-  path: '/wechat',
+  path: 'wechat',
   redirect: '/wechat/menu',
   name: 'wechat',
   component: () => import('./views/Wechat/index.vue'),

@@ -14,7 +14,7 @@
       active-text-color="#ffd04b">
       <el-menu-item v-for="item in getPermissionMenu"
         :key="item.name"
-        :index="item.path">
+        :index="'/'+item.path">
         <i :class="item.meta.icon"></i>
         <span slot="title">{{item.meta.title}}</span>
       </el-menu-item>

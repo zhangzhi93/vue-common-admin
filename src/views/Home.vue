@@ -35,27 +35,16 @@ export default {
   },
   watch: {
     '$route'(to, from) {
-      const MenuArray = to.fullPath.split('/');
-      this.activeMenu({
-        FMenu: `/${MenuArray[1]}`,
-        SMenu: to.fullPath
-      })
+      this.setActiveMenu(to.fullPath);
     }
   },
   methods: {
     ...mapMutations({
-      subMenuHandler: 'GET_SUB_MENULIST',
-      activeMenu: 'GET_ACTIVE_MENU'
+      setActiveMenu: 'SET_ACTIVE_MENU',
     }),
   },
   mounted() {
-    const MenuArray = this.$route.fullPath.split('/');
-    const FMenu = `/${MenuArray[1]}`;
-    this.subMenuHandler(FMenu);
-    this.activeMenu({
-      FMenu,
-      SMenu: this.$route.fullPath
-    })
+    this.setActiveMenu(this.$route.fullPath);
   }
 }
 </script>
