@@ -19,3 +19,9 @@ new Vue({
   store,
   render: h => h(App),
 });
+
+router.beforeEach((to, from, next) => {
+  console.log(`to: ${to.path}`);
+  store.commit('SET_ACTIVE_MENU', to.path);
+  next();
+});

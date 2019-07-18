@@ -74,6 +74,7 @@ export const RouterMap = [{
 export default new Router({
   routes: [{
     path: '/',
+    redirect: '/dashboard/status',
     name: 'home',
     component: Home,
     children: RouterMap,

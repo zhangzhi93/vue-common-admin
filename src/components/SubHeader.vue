@@ -2,9 +2,9 @@
   <div class="sub-header">
     <ul>
       <li v-for="item in getTabList"
-        :key="item.url"
+        :key="item.path"
         @click="goToPage(item)"
-        :class="{'active':getTabActive == item.url}">
+        :class="{'active':getTabActive == item.path}">
         <span>{{item.title}}</span>
         <i class="el-icon-close close-btn" @click="closeTab(item)"></i>
       </li>

@@ -18,6 +18,8 @@ module.exports = {
     'import/no-dynamic-require': 'off',
     'global-require': 'off',
     'no-unused-vars': 'warn',
+    'no-plusplus':'off',
+    'consistent-return':'off',
   },
   parserOptions: {
     parser: 'babel-eslint',

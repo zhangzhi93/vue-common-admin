@@ -5,7 +5,7 @@
       <i class="el-icon-goods"></i>
       <span>管理系统</span>
     </div>
-    <el-menu :default-active="getActiveMenu.FMenu"
+    <el-menu :default-active="getActiveHeaderMenuName"
       mode="horizontal"
       menu-trigger="click"
       router
@@ -30,7 +30,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters(['getPermissionMenu', 'getActiveMenu']),
+    ...mapGetters(['getPermissionMenu', 'getActiveHeaderMenuName']),
   },
   watch: {
     getActiveMenu(val) {

@@ -18,7 +18,7 @@
 <script>
 import { mapMutations } from 'vuex'
 import Header from "../components/Header.vue";
-import Slider from "../components/Slider.vue";
+import Slider from "../components/Slider/index.vue";
 import SubHeader from "../components/SubHeader.vue";
 
 export default {
@@ -32,11 +32,6 @@ export default {
     Header,
     Slider,
     SubHeader
-  },
-  watch: {
-    '$route'(to, from) {
-      this.setActiveMenu(to.fullPath);
-    }
   },
   methods: {
     ...mapMutations({
