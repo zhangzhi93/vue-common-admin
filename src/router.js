@@ -18,6 +18,7 @@ export const RouterMap = [{
   },
   children: [{
     path: 'status',
+    redirect: 'status/one',
     name: 'status',
     component: () => import('./views/Dashboard/status.vue'),
     meta: {
@@ -26,6 +27,27 @@ export const RouterMap = [{
       icon: 'el-icon-menu',
       roles: [],
     },
+    children: [{
+      path: 'one',
+      name: 'one',
+      component: () => import('./views/Dashboard/status.vue'),
+      meta: {
+        title: '状态概览',
+        nav: ['状态概览', '状态概览'],
+        icon: 'el-icon-menu',
+        roles: [],
+      },
+    }, {
+      path: 'two',
+      name: 'two',
+      component: () => import('./views/Dashboard/update.vue'),
+      meta: {
+        title: '更新日志',
+        nav: ['更新日志', '更新日志'],
+        icon: 'el-icon-menu',
+        roles: [],
+      },
+    }],
   }, {
     path: 'update',
     name: 'update',

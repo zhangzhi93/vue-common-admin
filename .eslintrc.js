@@ -20,6 +20,7 @@ module.exports = {
     'no-unused-vars': 'warn',
     'no-plusplus':'off',
     'consistent-return':'off',
+    'no-prototype-builtins':'off',
   },
   parserOptions: {
     parser: 'babel-eslint',

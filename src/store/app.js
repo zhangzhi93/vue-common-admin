@@ -37,7 +37,7 @@ const app = {
       state.SubMenuList = MenuInfo.SubMenuList;
       state.MenuNames = MenuInfo.MenuNames;
       const { LastMenuMeta } = MenuInfo;
-      state.Nav = LastMenuMeta.nav;
+      state.Nav = LastMenuMeta ? LastMenuMeta.nav : '';
       const activeRouterInTab = getActiveTabInfo(state.TabList, data);
 
 
@@ -50,10 +50,10 @@ const app = {
       // const ActiveRouter = state.TabList.find(item => item.url === data);
 
       if (activeRouterInTab) {
-        this.commit(types.SET_ACTIVE_STATUS, activeRouterInTab.url);
+        this.commit(types.SET_ACTIVE_STATUS, activeRouterInTab.path);
       } else {
         this.commit(types.SET_ACTIVE_STATUS, data);
-        state.TabList = [...state.TabList, { title: LastMenuMeta.meta.title, url: data }];
+        state.TabList = [...state.TabList, { title: LastMenuMeta.title, path: data }];
       }
     },
     [types.SET_ACTIVE_STATUS](state, data) {

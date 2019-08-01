@@ -44,10 +44,14 @@ function getMenuNameFromUrl(url) {
 //
 function getLastMenuListFromName(list, names, index, callback) {
   const subList = list.find(item => item.name === names[index]);
-  if (subList.children && subList.children.length > 0) {
-    getLastMenuListFromName(subList.children, names, index + 1, callback);
+  if (subList) {
+    if (subList.hasOwnProperty('children') && subList.children.length > 0) {
+      getLastMenuListFromName(subList.children, names, index + 1, callback);
+    } else {
+      callback(subList);
+    }
   } else {
-    callback(subList);
+    console.warn('请查看菜单配置！');
   }
 }
 /*
