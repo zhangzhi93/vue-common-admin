@@ -7,7 +7,7 @@ Vue.use(Router);
 
 export const RouterMap = [{
   path: 'dashboard',
-  redirect: '/dashboard/status',
+  redirect: '/dashboard/status/one',
   name: 'dashboard',
   component: Status,
   meta: {
@@ -18,7 +18,6 @@ export const RouterMap = [{
   },
   children: [{
     path: 'status',
-    redirect: 'status/one',
     name: 'status',
     component: () => import('./views/Dashboard/status.vue'),
     meta: {
@@ -87,6 +86,38 @@ export const RouterMap = [{
     meta: {
       title: '关键词回复',
       nav: ['微信配置', '关键词回复'],
+      icon: 'el-icon-menu',
+      roles: [],
+    },
+  }],
+}, {
+  path: 'plugin',
+  redirect: '/plugin/venn',
+  name: 'plugin',
+  component: () => import('./views/Plugin/index.vue'),
+  meta: {
+    title: '插件测试',
+    nav: ['插件测试'],
+    icon: 'el-icon-menu',
+    roles: [],
+  },
+  children: [{
+    path: 'venn',
+    name: 'venn',
+    component: () => import('./views/Plugin/Venn.vue'),
+    meta: {
+      title: '韦恩图',
+      nav: ['插件测试', '韦恩图'],
+      icon: 'el-icon-menu',
+      roles: [],
+    },
+  }, {
+    path: 'tree-select',
+    name: 'tree-select',
+    component: () => import('./views/Plugin/TreeSelect.vue'),
+    meta: {
+      title: '树选择',
+      nav: ['插件测试', '树选择'],
       icon: 'el-icon-menu',
       roles: [],
     },

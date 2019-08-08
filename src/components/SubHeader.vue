@@ -1,12 +1,9 @@
 <template>
   <div class="sub-header">
     <ul>
-      <li v-for="item in getTabList"
-        :key="item.path"
-        @click="goToPage(item)"
-        :class="{'active':getTabActive == item.path}">
+      <li v-for="(item,index) in getTabList" :key="item.path" @click="goToPage(item)" :class="{'active':getTabActive == item.path}">
         <span>{{item.title}}</span>
-        <i class="el-icon-close close-btn" @click="closeTab(item)"></i>
+        <i class="el-icon-close close-btn" v-if="!item.permanent" @click.stop="closeTab(index)"></i>
       </li>
     </ul>
   </div>
@@ -22,14 +19,15 @@ export default {
   methods: {
     ...mapMutations({
       setActiveStatus: 'SET_ACTIVE_STATUS',
+      removeTabItem: 'REMOVE_TAB_ITEM',
     }),
     goToPage(item) {
-      this.setActiveStatus(item.url);
-      this.$router.push(item.url);
+      this.setActiveStatus(item.path);
+      this.$router.push(item.path).catch(err => { });
     },
-    closeTab(item){
-      this.setActiveStatus(item.url);
-      this.$router.push(item.url);
+    closeTab(index) {
+      this.$router.push(this.getTabList[index - 1].path).catch(err => { });
+      this.removeTabItem(index);
     }
   }
 };

@@ -10,7 +10,8 @@ const app = {
     Nav: [],
     TabList: [{
       title: '状态概览',
-      path: '/dashboard/status',
+      path: '/dashboard/status/one',
+      permanent: true,
     }],
     activeTab: '',
   },
@@ -33,21 +34,11 @@ const app = {
   mutations: {
     [types.SET_ACTIVE_MENU](state, data) {
       const MenuInfo = getMenuInfoFromNames(state.PermissionMenu, data);
-      debugger;
       state.SubMenuList = MenuInfo.SubMenuList;
       state.MenuNames = MenuInfo.MenuNames;
       const { LastMenuMeta } = MenuInfo;
       state.Nav = LastMenuMeta ? LastMenuMeta.nav : '';
       const activeRouterInTab = getActiveTabInfo(state.TabList, data);
-
-
-      // const MenuItem = data.split('/');
-      // state.SubMenuList = state.PermissionMenu.find(item => item.name === MenuItem[1]);
-      // const ThirdMenuList = state.SubMenuList.children.find(item => item.name === MenuItem[2]);
-      // state.FMenu = `/${MenuItem[1]}`;
-      // state.SMenu = MenuItem[2] ? `/${MenuItem[2]}` : state.SubMenuList.children[0].path;
-      // state.Nav = MenuItem[3] ? ThirdMenuList.children.find(item => item.name === MenuItem[3]).meta.nav : ThirdMenuList.meta.nav;
-      // const ActiveRouter = state.TabList.find(item => item.url === data);
 
       if (activeRouterInTab) {
         this.commit(types.SET_ACTIVE_STATUS, activeRouterInTab.path);

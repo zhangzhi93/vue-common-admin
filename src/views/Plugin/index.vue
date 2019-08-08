@@ -1,11 +1,9 @@
 <template>
-  <div>
-    <span>菜单</span>
-  </div>
+  <router-view />
 </template>
 
 <script>
 export default {
-  name: 'Menu',
+  name: 'Index',
 };
 </script>
