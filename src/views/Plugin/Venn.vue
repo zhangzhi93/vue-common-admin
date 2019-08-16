@@ -9,7 +9,7 @@ import { select } from 'd3';
 import { VennDiagram } from 'venn.js';
 
 export default {
-  name: 'Menu',
+  name: 'Venn',
   data() {
     return {
       sets: [

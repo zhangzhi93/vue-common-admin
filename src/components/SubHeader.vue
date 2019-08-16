@@ -36,6 +36,9 @@ export default {
 .sub-header {
   background-color: #e5e6e9;
   padding: 2px 5px 0;
+  position: fixed;
+  top: 50px;
+  width: 100%;
   ul {
     overflow: hidden;
     li {

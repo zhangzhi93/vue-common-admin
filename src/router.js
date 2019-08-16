@@ -121,6 +121,26 @@ export const RouterMap = [{
       icon: 'el-icon-menu',
       roles: [],
     },
+  }, {
+    path: 'calendar',
+    name: 'calendar',
+    component: () => import('./views/Plugin/Calendar.vue'),
+    meta: {
+      title: '日历',
+      nav: ['插件测试', '日历'],
+      icon: 'el-icon-menu',
+      roles: [],
+    },
+  }, {
+    path: 'diy-tree-select',
+    name: 'diy-tree-select',
+    component: () => import('./views/Plugin/DiyTreeSelect.vue'),
+    meta: {
+      title: '自定义树选择',
+      nav: ['插件测试', '自定义树选择'],
+      icon: 'el-icon-menu',
+      roles: [],
+    },
   }],
 }];
 
