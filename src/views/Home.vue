@@ -16,22 +16,22 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
-import Header from "../components/Header.vue";
-import Slider from "../components/Slider/index.vue";
-import SubHeader from "../components/SubHeader.vue";
+import { mapMutations } from 'vuex';
+import Header from '../components/Header.vue';
+import Slider from '../components/Slider/index.vue';
+import SubHeader from '../components/SubHeader.vue';
 
 export default {
   name: 'home',
   data() {
     return {
-      total: 0
+      total: 0,
     };
   },
   components: {
     Header,
     Slider,
-    SubHeader
+    SubHeader,
   },
   methods: {
     ...mapMutations({
@@ -40,8 +40,8 @@ export default {
   },
   mounted() {
     this.setActiveMenu(this.$route.fullPath);
-  }
-}
+  },
+};
 </script>
 <style lang="less">
 .container {

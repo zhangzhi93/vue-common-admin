@@ -31,17 +31,17 @@ export default {
   props: {
     item: {
       type: Object,
-      required: true
+      required: true,
     },
     parentPath: {
       type: String,
-    }
+    },
   },
   computed: {
     fullPath() {
       return `${this.parentPath}/${this.item.path}`;
-    }
-  }
+    },
+  },
 };
 </script>
 

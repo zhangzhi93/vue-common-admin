@@ -24,17 +24,17 @@
 </template>
 
 <script>
-import Treeselect, { ASYNC_SEARCH } from '@riophae/vue-treeselect'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+import Treeselect, { ASYNC_SEARCH } from '@riophae/vue-treeselect';
+import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 
 const simulateAsyncOperation = fn => {
-  setTimeout(fn, 800)
-}
+  setTimeout(fn, 800);
+};
 
 export default {
   name: 'TreeSelect',
   components: {
-    Treeselect
+    Treeselect,
   },
   data() {
     return {
@@ -42,7 +42,7 @@ export default {
         name: null,
         sync: null,
         local: null,
-        vuexSync: null
+        vuexSync: null,
       },
       options: [{
         id: '1',
@@ -74,7 +74,7 @@ export default {
         id: 'c',
         label: 'c',
       }],
-    }
+    };
   },
   methods: {
     loadOptions({ action, searchQuery, callback }) {
@@ -83,16 +83,16 @@ export default {
           const options = [1, 2, 3, 4, 5].map(i => ({
             id: `${searchQuery}-${i}`,
             label: `${searchQuery}-${i}`,
-          }))
-          callback(null, options)
-        })
+          }));
+          callback(null, options);
+        });
       }
     },
     renderLimitText(count) {
-      return `+${count}`
-    }
+      return `+${count}`;
+    },
   },
-}
+};
 </script>
 
 <style lang="less" scoped>

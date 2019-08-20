@@ -23,13 +23,13 @@ export default {
     }),
     goToPage(item) {
       this.setActiveStatus(item.path);
-      this.$router.push(item.path).catch(err => { });
+      this.$router.push(item.path).catch(err => { console.log(err) });
     },
     closeTab(index) {
-      this.$router.push(this.getTabList[index - 1].path).catch(err => { });
+      this.$router.push(this.getTabList[index - 1].path).catch(err => { console.log(err) });
       this.removeTabItem(index);
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="less" scoped>

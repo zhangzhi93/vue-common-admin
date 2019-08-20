@@ -35,7 +35,7 @@ export default {
   watch: {
     getActiveMenu(val) {
       console.log(val);
-    }
+    },
   },
 };
 </script>

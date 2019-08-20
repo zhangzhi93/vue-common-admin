@@ -13,24 +13,24 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import MenuItem from './MenuItem';
+import MenuItem from './MenuItem.vue';
 
 export default {
   name: 'Slider',
   data() {
     return {
       isCollapse: false,
-    }
+    };
   },
   components: {
-    MenuItem
+    MenuItem,
   },
   computed: {
     ...mapGetters(['getSubMenuList', 'getActiveSliderMenuName', 'getActiveHeaderMenuName']),
   },
   mounted() {
-    console.log(this.getSubMenuList)
-  }
+    console.log(this.getSubMenuList);
+  },
 };
 </script>
 

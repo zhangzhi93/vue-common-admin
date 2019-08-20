@@ -11,12 +11,12 @@ export default {
   name: 'Dashboard',
   data() {
     return {
-      log: ''
-    }
+      log: '',
+    };
   },
   methods: {
 
-  }
+  },
 };
 </script>
 

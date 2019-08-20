@@ -79,7 +79,7 @@ function getMenuInfoFromNames(MenuList, url) {
  * url 需要分割的url
  */
 function getActiveTabInfo(list, url) {
-  const [noSearchUrl, searchUrl] = url.split('?');
+  const [noSearchUrl] = url.split('?');
   return list.find(item => item.path === noSearchUrl);
 }
 export { GlobalLoading, getMenuInfoFromNames, getActiveTabInfo };

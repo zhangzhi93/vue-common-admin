@@ -18,30 +18,18 @@ const User = {
     [types.GET_LAB_LIST](state, data) {
       state.labListData = data.data;
     },
-    [types.GET_LAB_DETAIL](state, data) {
-      state.labDetailData = data.data;
-    },
   },
   // 异步处理
   actions: {
     /**
    * 用户列表
    */
-    async getVirtualLabList({ commit }, { params }) {
-      const { data } = await api.lab.getVirtualLabList(params);
-      if (data) {
-        commit(types.GET_LAB_LIST, data);
-      }
-    },
-    /**
-     * 用户详情
-     */
-    async getVirtualLabDetail({ commit }, { params }) {
-      const { data } = await api.lab.getVirtualLabDetail(params);
-      if (data) {
-        commit(types.GET_LAB_DETAIL, data);
-      }
-    },
+    // async getVirtualLabList({ commit }, { params }) {
+    //   const { data } = await api.lab.getVirtualLabList(params);
+    //   if (data) {
+    //     commit(types.GET_LAB_LIST, data);
+    //   }
+    // },
   },
 };
 

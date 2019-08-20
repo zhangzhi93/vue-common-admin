@@ -19,12 +19,12 @@ export default {
         { sets: ['A', 'B'], size: 2 },
         { sets: ['A', 'C'], size: 2 },
         { sets: ['B', 'C'], size: 2 },
-      ]
-    }
+      ],
+    };
   },
   mounted() {
     const chart = VennDiagram();
-    select("#venn").datum(this.sets).call(chart);
-  }
+    select('#venn').datum(this.sets).call(chart);
+  },
 };
 </script>
