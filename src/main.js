@@ -5,8 +5,10 @@ import ElementUI from 'element-ui';
 import router from './router';
 import store from './store/index';
 import App from './App.vue';
+import './directives/directiveMoveable';
 import 'element-ui/lib/theme-chalk/index.css';
 import './style.less';
+import './assets/style/index.less';
 
 Vue.config.productionTip = false;
 

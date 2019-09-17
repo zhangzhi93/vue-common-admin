@@ -16,7 +16,7 @@
 <script>
 
 export default {
-  name: 'DiyTreeSelect',
+  name: 'TreeSelect',
   model: {
     prop: 'currentNodekey',
     event: 'change',
@@ -31,7 +31,7 @@ export default {
     },
     placeholder: {
       type: String,
-      default: '请选择',
+      default: '请选择'
     },
     size: {
       type: String,
@@ -43,32 +43,30 @@ export default {
     },
     data: {
       type: Array,
-      default() {
-        return []
-      },
+      default: [],
     },
     treeProps: {
       type: Object,
       default() {
         return {
           children: 'children',
-          label: 'label',
-        };
-      },
-    },
+          label: 'label'
+        }
+      }
+    }
   },
   data() {
     return {
       visible: false,
       selectName: '',
       width: 150,
-    };
+    }
   },
   watch: {
     currentNodekey(val) {
       this.$refs.tree.setCurrentKey(val);
       this.selectName = this.$refs.tree.getCurrentNode()[this.treeProps.label];
-    },
+    }
   },
   methods: {
     computeWidth() {
@@ -81,12 +79,12 @@ export default {
     },
     popSlideDown() {
       this.visible = !this.visible;
-    },
+    }
   },
   mounted() {
     this.selectName = this.$refs.tree.getCurrentNode()[this.treeProps.label];
-  },
-};
+  }
+}
 </script>
 
 <style lang="less">

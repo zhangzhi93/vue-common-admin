@@ -21,6 +21,8 @@ module.exports = {
     'no-plusplus': 'off',
     'consistent-return': 'off',
     'no-prototype-builtins': 'off',
+    'no-unused-vars': 'off',
+    'func-names': 'off',
   },
   parserOptions: {
     parser: 'babel-eslint',

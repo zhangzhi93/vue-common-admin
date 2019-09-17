@@ -141,6 +141,16 @@ export const RouterMap = [{
       icon: 'el-icon-menu',
       roles: [],
     },
+  }, {
+    path: 'moveable',
+    name: 'moveable',
+    component: () => import('./views/Plugin/Moveable.vue'),
+    meta: {
+      title: '拖动布局',
+      nav: ['插件测试', '拖动布局'],
+      icon: 'el-icon-menu',
+      roles: [],
+    },
   }],
 }];
 

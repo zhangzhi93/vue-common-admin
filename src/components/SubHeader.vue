@@ -39,6 +39,7 @@ export default {
   position: fixed;
   top: 50px;
   width: 100%;
+  z-index: 9;
   ul {
     overflow: hidden;
     li {
@@ -50,6 +51,7 @@ export default {
       font-size: 13px;
       position: relative;
       cursor: pointer;
+      user-select: none;
       &.active {
         background-color: #eff1f3;
         border-top-left-radius: 5px;

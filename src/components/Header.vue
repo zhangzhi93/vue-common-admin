@@ -62,6 +62,7 @@ export default {
   /deep/.el-menu--horizontal > .el-menu-item {
     height: 50px;
     line-height: 50px;
+    user-select:none;
   }
   .el-menu {
     float: left;
