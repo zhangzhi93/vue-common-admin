@@ -1,6 +1,6 @@
 <template>
   <div>
-    <tree-select :data="data" v-model="value" placeholder="请选择组织" size="small"></tree-select>
+    <tree-select :treeData="data" v-model="value" placeholder="请选择组织" size="small"></tree-select>
     <br>
     <el-button @click="value=8">设置选中节点二级 3-2</el-button>
     <el-button @click="value=2">设置选中节点一级 2</el-button>

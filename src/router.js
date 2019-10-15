@@ -131,23 +131,45 @@ export const RouterMap = [{
       icon: 'el-icon-menu',
       roles: [],
     },
-  }, {
+  }],
+}, {
+  path: 'function',
+  redirect: '/function/diy-tree-select',
+  name: 'function',
+  component: () => import('./views/Function/index.vue'),
+  meta: {
+    title: '自定义功能',
+    nav: ['自定义功能'],
+    icon: 'el-icon-menu',
+    roles: [],
+  },
+  children: [{
     path: 'diy-tree-select',
     name: 'diy-tree-select',
-    component: () => import('./views/Plugin/DiyTreeSelect.vue'),
+    component: () => import('./views/Function/TreeSelect.vue'),
     meta: {
       title: '自定义树选择',
-      nav: ['插件测试', '自定义树选择'],
+      nav: ['自定义功能', '自定义树选择'],
       icon: 'el-icon-menu',
       roles: [],
     },
   }, {
     path: 'moveable',
     name: 'moveable',
-    component: () => import('./views/Plugin/Moveable.vue'),
+    component: () => import('./views/Function/Moveable.vue'),
     meta: {
       title: '拖动布局',
-      nav: ['插件测试', '拖动布局'],
+      nav: ['自定义功能', '拖动布局'],
+      icon: 'el-icon-menu',
+      roles: [],
+    },
+  }, {
+    path: 'fullscreen',
+    name: 'fullscreen',
+    component: () => import('./views/Function/Fullscreen.vue'),
+    meta: {
+      title: '自定义全屏',
+      nav: ['自定义功能', '自定义全屏'],
       icon: 'el-icon-menu',
       roles: [],
     },

@@ -1,8 +1,9 @@
 <template>
   <div>
     <div class="mobile">
-      <calendar-panel></calendar-panel>
+      <calendar-panel @change="onChange" v-model="date"></calendar-panel>
     </div>
+    <el-button type="primary" @click="jumpTo">跳转</el-button>
   </div>
 </template>
 
@@ -14,12 +15,19 @@ export default {
   components: {
     CalendarPanel,
   },
-
   data() {
     return {
-
+      date:'2019/10/18'
     };
   },
+  methods:{
+    onChange(val){
+      console.log(val)
+    },
+    jumpTo(){
+      this.date = '2019/10/09'
+    }
+  }
 };
 </script>
 

@@ -1,9 +1,9 @@
 <template>
   <div class="tree-select">
     <el-popover v-model="visible" placement="bottom-start" trigger="click" :width="width" @show="computeWidth"
-      popper-class="tree-select-popover" :disabled="disabled" transition="el-zoom-in-top">
-      <el-tree :data="data" :props="treeProps" @node-click="handleNodeClick" highlight-current
-        :expand-on-click-node="false" :node-key="nodeKey" empty-text="暂无数据" :current-node-key="currentNodekey"
+      popper-class="tree-select-popover" transition="el-zoom-in-top">
+      <el-tree :data="treeData" :props="treeProps" @node-click="handleNodeClick" highlight-current
+        :expand-on-click-node="false" :node-key="nodeKey" empty-text="暂无数据" :current-node-key="value"
         ref="tree"></el-tree>
       <el-input :value="selectName" :size="size" :placeholder="placeholder" readonly :disabled="disabled"
         @click="popSlideDown" class="tree-select-input" slot="reference" ref="input">
@@ -18,11 +18,11 @@
 export default {
   name: 'TreeSelect',
   model: {
-    prop: 'currentNodekey',
+    prop: 'value',
     event: 'change',
   },
   props: {
-    currentNodekey: {
+    value: {
       type: [String, Number],
     },
     nodeKey: {
@@ -41,7 +41,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    data: {
+    treeData: {
       type: Array,
       default: [],
     },
@@ -63,9 +63,35 @@ export default {
     }
   },
   watch: {
-    currentNodekey(val) {
-      this.$refs.tree.setCurrentKey(val);
-      this.selectName = this.$refs.tree.getCurrentNode()[this.treeProps.label];
+    value: {
+      handler(val) {
+        if (val) {
+          this.$nextTick(() => {
+            this.$refs.tree.setCurrentKey(val);
+            this.$nextTick(() => {
+              const selectNode = this.$refs.tree.getCurrentNode();
+              this.selectName = selectNode ? this.$refs.tree.getCurrentNode()[this.treeProps.label] : '';
+            })
+          })
+        } else {
+          this.selectName = '';
+        }
+      },
+      immediate: true
+    },
+    treeData: {
+      handler(val) {
+        if (this.value) {
+          this.$refs.tree.setCurrentKey(this.value);
+          this.$nextTick(() => {
+            const selectNode = this.$refs.tree.getCurrentNode();
+            this.selectName = selectNode ? this.$refs.tree.getCurrentNode()[this.treeProps.label] : '';
+          })
+        } else {
+          this.selectName = '';
+        }
+      },
+      deep: true
     }
   },
   methods: {
@@ -73,7 +99,7 @@ export default {
       this.width = this.$refs.input.$el.clientWidth;
     },
     handleNodeClick(data, checked, node) {
-      this.$emit('change', data.id);
+      this.$emit('change', data[this.nodeKey]);
       this.$emit('tree-click', data, checked, node);
       this.visible = false;
     },
@@ -81,9 +107,6 @@ export default {
       this.visible = !this.visible;
     }
   },
-  mounted() {
-    this.selectName = this.$refs.tree.getCurrentNode()[this.treeProps.label];
-  }
 }
 </script>
 
