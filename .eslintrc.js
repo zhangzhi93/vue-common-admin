@@ -23,6 +23,8 @@ module.exports = {
     'no-prototype-builtins': 'off',
     'no-unused-vars': 'off',
     'func-names': 'off',
+    'semi': 'warn',
+    'comma-dangle': 'warn',
   },
   parserOptions: {
     parser: 'babel-eslint',
