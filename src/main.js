@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import ElementUI from 'element-ui';
+import { VueElementLayout } from 'vue-element-layout';
 import router from './router';
 import store from './store/index';
 import App from './App.vue';
@@ -13,6 +14,7 @@ import './assets/style/index.less';
 Vue.config.productionTip = false;
 
 Vue.use(ElementUI);
+Vue.use(VueElementLayout);
 
 /* eslint-disable no-new */
 new Vue({

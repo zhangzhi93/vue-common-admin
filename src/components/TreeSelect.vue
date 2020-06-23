@@ -43,7 +43,7 @@ export default {
     },
     treeData: {
       type: Array,
-      default: [],
+      default: () => [],
     },
     treeProps: {
       type: Object,

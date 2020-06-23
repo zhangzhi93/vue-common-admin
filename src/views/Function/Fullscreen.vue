@@ -10,9 +10,10 @@
 
 <script>
 import ExpandCard from '@/components/ExpandCard.vue';
+
 export default {
   name: 'Fullscreen',
-  components:{
+  components: {
     ExpandCard
   },
   data() {
@@ -26,5 +27,4 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
 </style>

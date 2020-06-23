@@ -82,4 +82,21 @@ function getActiveTabInfo(list, url) {
   const [noSearchUrl] = url.split('?');
   return list.find(item => item.path === noSearchUrl);
 }
-export { GlobalLoading, getMenuInfoFromNames, getActiveTabInfo };
+
+/*
+ * 递归转换
+ */
+function recursionConvert(data, key, format) {
+  if (data && data.length > 0) {
+    return data.map(item => {
+      return {
+        ...format(item),
+        [key]: recursionConvert(item[key], key, format)
+      }
+    })
+  }
+}
+
+
+
+export { GlobalLoading, getMenuInfoFromNames, getActiveTabInfo, recursionConvert };
