@@ -2,7 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import ElementUI from 'element-ui';
-import { VueElementLayout } from 'vue-element-layout';
+import { VueElementLayout, LayoutTabs } from 'vue-element-layout';
 import router from './router';
 import store from './store/index';
 import App from './App.vue';
@@ -15,17 +15,16 @@ Vue.config.productionTip = false;
 
 Vue.use(ElementUI);
 Vue.use(VueElementLayout);
+Vue.use(LayoutTabs);
 
-/* eslint-disable no-new */
+router.beforeEach((to, from, next) => {
+  store.commit('SET_ACTIVE_MENU', to.path);
+  next();
+});
+
 new Vue({
   el: '#app',
   router,
   store,
   render: h => h(App),
-});
-
-router.beforeEach((to, from, next) => {
-  console.log(`to: ${to.path}`);
-  store.commit('SET_ACTIVE_MENU', to.path);
-  next();
 });

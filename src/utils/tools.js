@@ -97,6 +97,4 @@ function recursionConvert(data, key, format) {
   }
 }
 
-
-
 export { GlobalLoading, getMenuInfoFromNames, getActiveTabInfo, recursionConvert };

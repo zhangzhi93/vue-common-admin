@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './views/Home.vue';
-import Status from './views/Dashboard/status.vue';
+import Dashboard from './views/Dashboard.vue';
 
 Vue.use(Router);
 
@@ -177,62 +176,20 @@ Vue.use(Router);
 // }];
 
 export const RouterMap = [{
-  path: 'dashboard',
-  redirect: '/dashboard/status',
+  path: '/dashboard',
   name: 'dashboard',
+  component: Dashboard,
   meta: {
     title: '状态概览',
     nav: ['状态概览'],
     icon: 'el-icon-menu',
     roles: [],
   },
-  children: [{
-    path: '/dashboard/status',
-    redirect: '/dashboard/status/one',
-    name: 'status',
-    meta: {
-      title: '状态概览',
-      nav: ['状态概览', '状态概览'],
-      icon: 'el-icon-menu',
-      roles: [],
-    },
-    children: [{
-      path: '/dashboard/status/one',
-      name: 'one',
-      component: () => import('./views/Dashboard/status.vue'),
-      meta: {
-        title: '状态概览',
-        nav: ['状态概览', '状态概览'],
-        icon: 'el-icon-menu',
-        roles: [],
-      },
-    }, {
-      path: 'two',
-      name: 'two',
-      component: () => import('./views/Dashboard/update.vue'),
-      meta: {
-        title: '更新日志',
-        nav: ['更新日志', '更新日志'],
-        icon: 'el-icon-menu',
-        roles: [],
-      },
-    }],
-  }, {
-    path: 'update',
-    name: 'update',
-    component: () => import('./views/Dashboard/update.vue'),
-    meta: {
-      title: '更新日志',
-      nav: ['更新日志', '更新日志'],
-      icon: 'el-icon-menu',
-      roles: [],
-    },
-  }],
 }, {
-  path: 'wechat',
+  path: '/wechat',
   redirect: '/wechat/menu',
+  component: { render: h => h('router-view') },
   name: 'wechat',
-  component: () => import('./views/Wechat/index.vue'),
   meta: {
     title: '微信配置',
     nav: ['微信配置'],
@@ -240,7 +197,7 @@ export const RouterMap = [{
     roles: [],
   },
   children: [{
-    path: 'menu',
+    path: '/wechat/menu',
     name: 'menu',
     component: () => import('./views/Wechat/menu.vue'),
     meta: {
@@ -250,7 +207,7 @@ export const RouterMap = [{
       roles: [],
     },
   }, {
-    path: 'reply',
+    path: '/wechat/reply',
     name: 'reply',
     component: () => import('./views/Wechat/reply.vue'),
     meta: {
@@ -261,8 +218,9 @@ export const RouterMap = [{
     },
   }],
 }, {
-  path: 'plugin',
+  path: '/plugin',
   redirect: '/plugin/venn',
+  component: { render: h => h('router-view') },
   name: 'plugin',
   component: () => import('./views/Plugin/index.vue'),
   meta: {
@@ -272,7 +230,7 @@ export const RouterMap = [{
     roles: [],
   },
   children: [{
-    path: 'venn',
+    path: '/plugin/venn',
     name: 'venn',
     component: () => import('./views/Plugin/Venn.vue'),
     meta: {
@@ -282,7 +240,7 @@ export const RouterMap = [{
       roles: [],
     },
   }, {
-    path: 'tree-select',
+    path: '/plugin/tree-select',
     name: 'tree-select',
     component: () => import('./views/Plugin/TreeSelect.vue'),
     meta: {
@@ -292,7 +250,7 @@ export const RouterMap = [{
       roles: [],
     },
   }, {
-    path: 'calendar',
+    path: '/plugin/calendar',
     name: 'calendar',
     component: () => import('./views/Plugin/Calendar.vue'),
     meta: {
@@ -303,8 +261,9 @@ export const RouterMap = [{
     },
   }],
 }, {
-  path: 'function',
+  path: '/function',
   redirect: '/function/diy-tree-select',
+  component: { render: h => h('router-view') },
   name: 'function',
   component: () => import('./views/Function/index.vue'),
   meta: {
@@ -314,7 +273,7 @@ export const RouterMap = [{
     roles: [],
   },
   children: [{
-    path: 'diy-tree-select',
+    path: '/function/diy-tree-select',
     name: 'diy-tree-select',
     component: () => import('./views/Function/TreeSelect.vue'),
     meta: {
@@ -324,7 +283,7 @@ export const RouterMap = [{
       roles: [],
     },
   }, {
-    path: 'moveable',
+    path: '/function/moveable',
     name: 'moveable',
     component: () => import('./views/Function/Moveable.vue'),
     meta: {
@@ -334,7 +293,7 @@ export const RouterMap = [{
       roles: [],
     },
   }, {
-    path: 'fullscreen',
+    path: '/function/fullscreen',
     name: 'fullscreen',
     component: () => import('./views/Function/Fullscreen.vue'),
     meta: {
@@ -347,44 +306,7 @@ export const RouterMap = [{
 }];
 
 export default new Router({
-  routes: [{
-    path: '/',
-    component: Home,
-    children: [
-      {
-        path: '/',
-        redirect: 'dashboard',
-      },
-      {
-        path: 'dashboard',
-        name: 'dashboard',
-        component: () => import('./views/Dashboard/index.vue'),
-        children: [
-          {
-            path: '/dashboard',
-            redirect: '/dashboard/status',
-          },
-          {
-            path: 'status',
-            name: 'status',
-            component: () => import('./views/Dashboard/status.vue'),
-            meta: {
-              title: '状态概览',
-              nav: ['状态概览', '状态概览'],
-              icon: 'el-icon-menu',
-              roles: [],
-            },
-          }
-        ]
-      },
-      // {
-      //   path: 'home',
-      //   name: 'home',
-      //   component: Home,
-      // },
-      // ...RouterMap,
-    ],
-  }],
+  routes: RouterMap,
 });
 
 // export default new Router({

@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div style="padding:0 15px">
     <el-row :gutter="20">
       <el-col :span="6">
         <el-card :body-style="{ padding: '0px' }" class="user-card">
-          <img src="../../assets/hamburger.png" class="image">
+          <img src="../assets/hamburger.png" class="image">
           <div style="padding: 14px;">
             <span>好吃的汉堡</span>
             <div class="bottom clearfix">
@@ -15,7 +15,7 @@
       </el-col>
       <el-col :span="18">
         <el-card :body-style="{ padding: '0px' }" class="user-card">
-          <img src="../../assets/hamburger.png" class="image">
+          <img src="../assets/hamburger.png" class="image">
           <div style="padding: 14px;">
             <span>好吃的汉堡</span>
             <div class="bottom clearfix">
@@ -48,7 +48,7 @@
 <script>
 import ArrayMove from 'array-move';
 export default {
-  name: 'status',
+  name: 'Dashboard',
   data() {
     return {
       currentDate: new Date(),

@@ -24,7 +24,7 @@ export default {
 <style lang="less" scoped>
 .layout {
   position: relative;
-  min-height: calc(~"100vh - 100px");
+  min-height: calc(~"100vh - 99px");
   > div {
     width: 150px;
     height: 150px;

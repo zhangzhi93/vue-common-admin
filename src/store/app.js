@@ -22,7 +22,7 @@ const app = {
     getActiveHeaderMenuName: state => `/${state.MenuNames[1]}`,
     // 获取左侧菜单列激活菜单
     getActiveSliderMenuName: state => {
-      return state.MenuNames.slice(2).join('/');
+      return state.MenuNames.slice(-1).join('/');
     },
     // 获取最终渲染的菜单
     getPermissionMenu: state => state.PermissionMenu,
