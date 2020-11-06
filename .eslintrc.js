@@ -21,9 +21,8 @@ module.exports = {
     'no-plusplus': 'off',
     'consistent-return': 'off',
     'no-prototype-builtins': 'off',
-    'no-unused-vars': 'off',
     'func-names': 'off',
-    'semi': 'warn',
+    semi: 'warn',
     'comma-dangle': 'warn',
   },
   parserOptions: {

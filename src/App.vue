@@ -1,7 +1,9 @@
 <template>
   <vue-element-layout :menu-data="data" :defaultActive="getActiveSliderMenuName"
     :show-footer="false">
-    <layout-tabs slot="navTabs" :tabs-data="getTabList" type="flex"></layout-tabs>
+    <layout-tabs slot="navTabs" :active-name="getTabActive" :tabs-data="getTabList" type="flex"
+      @tab-click="onTabClick" @tab-remove="onTabRemove">
+    </layout-tabs>
     <router-view />
   </vue-element-layout>
 </template>
@@ -23,8 +25,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getActiveSliderMenuName', 'getTabList'])
+    ...mapGetters(['getActiveSliderMenuName', 'getTabList', 'getTabActive'])
   },
+  methods: {
+    onTabClick(data) {
+      this.$router.replace(data.path)
+    }
+  }
 };
 </script>
 

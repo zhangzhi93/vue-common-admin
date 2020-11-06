@@ -10,7 +10,8 @@ const app = {
     Nav: [],
     TabList: [{
       title: '状态概览',
-      path: '/dashboard/status/one',
+      path: '/dashboard',
+      name: 'dashboard',
       permanent: true,
     }],
     activeTab: '',
@@ -36,15 +37,15 @@ const app = {
       const MenuInfo = getMenuInfoFromNames(state.PermissionMenu, data);
       state.SubMenuList = MenuInfo.SubMenuList;
       state.MenuNames = MenuInfo.MenuNames;
-      const { LastMenuMeta } = MenuInfo;
-      state.Nav = LastMenuMeta ? LastMenuMeta.nav : '';
+      const { LastMenu } = MenuInfo;
+      state.Nav = LastMenu.meta ? LastMenu.meta.nav : '';
       const activeRouterInTab = getActiveTabInfo(state.TabList, data);
 
       if (activeRouterInTab) {
-        this.commit(types.SET_ACTIVE_STATUS, activeRouterInTab.path);
+        this.commit(types.SET_ACTIVE_STATUS, activeRouterInTab.name);
       } else {
-        this.commit(types.SET_ACTIVE_STATUS, data);
-        state.TabList = [...state.TabList, { title: LastMenuMeta.title, path: data }];
+        this.commit(types.SET_ACTIVE_STATUS, LastMenu.name);
+        state.TabList = [...state.TabList, { title: LastMenu.meta.title, path: data, name: LastMenu.name }];
       }
     },
     [types.SET_ACTIVE_STATUS](state, data) {

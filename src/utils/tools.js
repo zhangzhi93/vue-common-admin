@@ -57,7 +57,8 @@ function getLastMenuListFromName(list, names, index, callback) {
 /*
  * 根据分割的url获取菜单列
  *
- * url 需要分割的url
+ * MenuList 菜单嵌套数组
+ * url 需要分割的url(地址栏中#/后面的地址)
  */
 function getMenuInfoFromNames(MenuList, url) {
   const MenuNames = getMenuNameFromUrl(url);
@@ -66,10 +67,9 @@ function getMenuInfoFromNames(MenuList, url) {
   getLastMenuListFromName(MenuList, MenuNames, 1, data => {
     LastMenu = data;
   });
-  console.log(LastMenu);
   return {
     SubMenuList,
-    LastMenuMeta: LastMenu.meta,
+    LastMenu,
     MenuNames,
   };
 }
