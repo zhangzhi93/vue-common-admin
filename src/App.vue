@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import { RouterMap } from './router';
 import { recursionConvert } from './utils/tools';
 
@@ -28,8 +28,21 @@ export default {
     ...mapGetters(['getActiveSliderMenuName', 'getTabList', 'getTabActive'])
   },
   methods: {
+    ...mapActions(['removeTabItem']),
     onTabClick(data) {
       this.$router.replace(data.path)
+    },
+    onTabRemove(data) {
+      console.log(data);
+      this.removeTabItem({
+        payload: {
+          name: data.name
+        },
+        callback: (res) => {
+          console.log(res);
+          this.$router.replace(res.path);
+        }
+      })
     }
   }
 };

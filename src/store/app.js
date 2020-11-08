@@ -52,11 +52,18 @@ const app = {
       state.activeTab = data;
     },
     [types.REMOVE_TAB_ITEM](state, data) {
-      state.TabList.splice(data, 1);
+      const tabIndex = state.TabList.findIndex(item => item.name === data)
+      state.TabList.splice(tabIndex, 1);
     },
   },
   actions: {
-
+    removeTabItem({ commit, state }, { payload, callback }) {
+      const tabIndex = state.TabList.findIndex(item => item.name === payload.name)
+      state.TabList.splice(tabIndex, 1);
+      if (callback) {
+        callback(state.TabList[tabIndex - 1])
+      }
+    }
   },
 };
 

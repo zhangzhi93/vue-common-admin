@@ -9056,10 +9056,10 @@ vue-calendar-mobile-panel@^1.2.6:
   dependencies:
     vue "^2.6.10"
 
-vue-element-layout@0.0.4:
-  version "0.0.4"
-  resolved "https://registry.npm.taobao.org/vue-element-layout/download/vue-element-layout-0.0.4.tgz#5faa3ffd1ef2b1f57f70f719dfd920e60adfda78"
-  integrity sha1-X6o//R7ysfV/cPcZ39kg5grf2ng=
+vue-element-layout@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.npmjs.org/vue-element-layout/-/vue-element-layout-0.0.5.tgz#8a2338a8a95fe4d66210946122f92a0d1772591e"
+  integrity sha512-i+wwADEMxE0gwfFITuGnleGPcInhFQJZAq8tLcNNiq5QbTIGGpyCkepu9HNwBsfwRVKr2YQFYZTfkSoKNKPIAg==
 
 vue-eslint-parser@^7.1.1:
   version "7.1.1"
