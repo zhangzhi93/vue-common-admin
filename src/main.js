@@ -6,6 +6,7 @@ import { VueElementLayout, LayoutTabs } from 'vue-element-layout';
 import router from './router';
 import store from './store/index';
 import App from './App.vue';
+import VueAudio from 'vue-audio-better';
 import './directives/directiveMoveable';
 import 'element-ui/lib/theme-chalk/index.css';
 import './style.less';
@@ -16,6 +17,7 @@ Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.use(VueElementLayout);
 Vue.use(LayoutTabs);
+Vue.use(VueAudio)
 
 router.beforeEach((to, from, next) => {
   store.commit('SET_ACTIVE_MENU', to.path);

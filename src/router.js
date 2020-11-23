@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Dashboard from './views/Dashboard.vue';
+import Login from './views/Login.vue'
 
 Vue.use(Router);
 
@@ -51,7 +52,6 @@ export const RouterMap = [{
   redirect: '/plugin/venn',
   component: { render: h => h('router-view') },
   name: 'plugin',
-  component: () => import('./views/Plugin/index.vue'),
   meta: {
     title: '插件测试',
     nav: ['插件测试'],
@@ -88,13 +88,22 @@ export const RouterMap = [{
       icon: 'el-icon-menu',
       roles: [],
     },
+  }, {
+    path: '/plugin/audio-player',
+    name: 'audio-player',
+    component: () => import('./views/Plugin/AudioPlayer.vue'),
+    meta: {
+      title: '播放器',
+      nav: ['插件测试', '播放器'],
+      icon: 'el-icon-menu',
+      roles: [],
+    },
   }],
 }, {
   path: '/function',
   redirect: '/function/diy-tree-select',
   component: { render: h => h('router-view') },
   name: 'function',
-  component: () => import('./views/Function/index.vue'),
   meta: {
     title: '自定义功能',
     nav: ['自定义功能'],
@@ -134,11 +143,15 @@ export const RouterMap = [{
   }],
 }];
 
-
 export default new Router({
   routes: [{
     path: '/',
     redirect: '/dashboard',
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login,
   },
   ...RouterMap
   ],

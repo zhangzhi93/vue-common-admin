@@ -1,6 +1,9 @@
 <template>
   <div class="layout">
-    <div v-moveable></div>
+    <div v-moveable>
+      <div v-resize class="resize"></div>
+    </div>
+
     <!-- <div></div>
     <div></div>
     <div></div> -->
@@ -34,6 +37,15 @@ export default {
   }
   > div + div {
     margin-left: 10px;
+  }
+  .resize {
+    width: 6px;
+    height: 6px;
+    position: absolute;
+    right: -3px;
+    bottom: -3px;
+    background-color: #888;
+    cursor: se-resize;
   }
 }
 </style>

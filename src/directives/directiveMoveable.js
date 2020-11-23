@@ -58,9 +58,9 @@ Vue.directive('resize', {
       const domWidth = op.parentNode.clientWidth;
       const domHeight = op.parentNode.clientHeight;
       document.onmousemove = function (moveEvent) {
-        e.stopPropagation();
-        const l = e.clientX - startX;
-        const t = e.clientY - startY;
+        moveEvent.stopPropagation();
+        const l = moveEvent.clientX - startX;
+        const t = moveEvent.clientY - startY;
         op.parentNode.style.width = `${domWidth + l}px`;
         op.parentNode.style.height = `${domHeight + t}px`;
       };
