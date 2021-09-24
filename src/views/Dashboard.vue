@@ -1,52 +1,43 @@
 <template>
-  <div style="padding:0 15px">
-    <el-row :gutter="20">
-      <el-col :span="6">
-        <el-card :body-style="{ padding: '0px' }" class="user-card">
+  <div style="padding:15px">
+    <a-row :gutter="20">
+      <a-col :span="6">
+        <a-card :body-style="{ padding: '0px' }" class="user-card">
           <img src="../assets/hamburger.png" class="image">
           <div style="padding: 14px;">
             <span>好吃的汉堡</span>
             <div class="bottom clearfix">
               <time class="time">{{ currentDate }}</time>
-              <el-button type="text" class="button">操作按钮</el-button>
+              <a-button type="link" class="button">操作按钮</a-button>
             </div>
           </div>
-        </el-card>
-      </el-col>
-      <el-col :span="18">
-        <el-card :body-style="{ padding: '0px' }" class="user-card">
+        </a-card>
+      </a-col>
+      <a-col :span="18">
+        <a-card :body-style="{ padding: '0px' }" class="user-card">
           <img src="../assets/hamburger.png" class="image">
           <div style="padding: 14px;">
             <span>好吃的汉堡</span>
             <div class="bottom clearfix">
               <time class="time">{{ currentDate }}</time>
-              <el-button type="text" class="button">操作按钮</el-button>
+              <a-button type="link" class="button">操作按钮</a-button>
             </div>
           </div>
-        </el-card>
-      </el-col>
-    </el-row>
-    <el-row class="table-container">
-      <el-table border :data="tableData" style="width: 100%" :row-class-name="tableRowClassName">
-        <el-table-column prop="date" label="日期">
-        </el-table-column>
-        <el-table-column prop="name" label="姓名">
-        </el-table-column>
-        <el-table-column prop="sex" label="性别">
-        </el-table-column>
-        <el-table-column prop="address" label="地址">
-        </el-table-column>
-      </el-table>
-    </el-row>
+        </a-card>
+      </a-col>
+    </a-row>
+    <a-row class="table-container">
+      <a-table :columns="columns" :data-source="tableData" style="width: 100%" />
+    </a-row>
     <div>
       <div>{{beforeArray}}</div>
-      <el-button type="primary" size="small" @click="move">移动</el-button>
+      <a-button type="primary" size="small" @click="move">移动</a-button>
       <div>{{afterArray}}</div>
     </div>
   </div>
 </template>
 <script>
-import ArrayMove from 'array-move';
+import { arrayMoveImmutable } from 'array-move';
 export default {
   name: 'Dashboard',
   data() {
@@ -54,6 +45,27 @@ export default {
       currentDate: new Date(),
       beforeArray: [0, 1, 2, 3, 4, 5, 6, 7],
       afterArray: [],
+      columns: [{
+        title: '日期',
+        key: 'date',
+        dataIndex: 'date',
+        align: 'center',
+      }, {
+        title: '姓名',
+        key: 'name',
+        dataIndex: 'name',
+        align: 'center',
+      }, {
+        title: '性别',
+        key: 'sex',
+        dataIndex: 'sex',
+        align: 'center',
+      }, {
+        title: '地址',
+        key: 'address',
+        dataIndex: 'address',
+        align: 'center',
+      },],
       tableData: [{
         date: '2016-05-02',
         name: '王小虎',
@@ -78,16 +90,8 @@ export default {
     };
   },
   methods: {
-    tableRowClassName({ row, rowIndex }) {
-      if (rowIndex === 1) {
-        return 'warning-row';
-      } if (rowIndex === 3) {
-        return 'success-row';
-      }
-      return '';
-    },
     move() {
-      this.afterArray = ArrayMove(this.beforeArray, 4, 1)
+      this.afterArray = arrayMoveImmutable(this.beforeArray, 4, 1)
     }
   },
 };

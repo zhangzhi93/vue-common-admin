@@ -1,14 +1,12 @@
 <template>
-  <el-card class="expand-card">
-    <div slot="header" class="header">
-      <div class="action">
-        <i class="el-icon-rank" @click="switchFull"></i>
-      </div>
+  <a-card class="expand-card">
+    <div slot="extra" class="action">
+      <a-icon type="fullscreen" @click="switchFull"/>
     </div>
     <div ref="content">
-      <slot ></slot>
+      <slot></slot>
     </div>
-  </el-card>
+  </a-card>
 </template>
 <script>
 import { mapGetters } from 'vuex';

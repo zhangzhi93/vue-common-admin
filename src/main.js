@@ -1,28 +1,27 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
-import ElementUI from 'element-ui';
-import { VueElementLayout, LayoutTabs } from 'vue-element-layout';
+import Antd from 'ant-design-vue';
+import { VueAntdLayout, LayoutTabs } from 'vue-antd-layout';
 import router from './router';
 import store from './store/index';
 import App from './App.vue';
 import VueAudio from 'vue-audio-better';
-import './directives/directiveMoveable';
-import 'element-ui/lib/theme-chalk/index.css';
+import '@/directives/directiveMoveable';
+import Watermark from '@/directives/watermark';
+
+import 'ant-design-vue/dist/antd.less';
 import './style.less';
 import './assets/style/index.less';
+import './permission';
 
 Vue.config.productionTip = false;
 
-Vue.use(ElementUI);
-Vue.use(VueElementLayout);
+Vue.use(Antd);
+Vue.use(VueAntdLayout);
 Vue.use(LayoutTabs);
 Vue.use(VueAudio)
-
-router.beforeEach((to, from, next) => {
-  store.commit('SET_ACTIVE_MENU', to.path);
-  next();
-});
+Vue.use(Watermark)
 
 new Vue({
   el: '#app',

@@ -1,12 +1,6 @@
 <template>
-  <div class="layout">
-    <div v-moveable>
-      <div v-resize class="resize"></div>
-    </div>
-
-    <!-- <div></div>
-    <div></div>
-    <div></div> -->
+  <div v-moveable class="move-block">
+    <div v-resize class="resize"></div>
   </div>
 </template>
 
@@ -25,19 +19,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.layout {
-  position: relative;
-  min-height: calc(~"100vh - 95px");
-  > div {
-    width: 150px;
-    height: 150px;
-    border: 1px solid #8f8f8f;
-    display: inline-block;
-    position: absolute;
-  }
-  > div + div {
-    margin-left: 10px;
-  }
+.move-block {
+  width: 150px;
+  height: 150px;
+  border: 1px solid #8f8f8f;
+  display: inline-block;
+  position: absolute;
   .resize {
     width: 6px;
     height: 6px;

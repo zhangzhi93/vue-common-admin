@@ -3,7 +3,7 @@
     <div class="mobile">
       <calendar-panel @change="onChange" v-model="date" :disableDate="disableDate"></calendar-panel>
     </div>
-    <el-button type="primary" @click="jumpTo">跳转</el-button>
+    <a-button type="primary" @click="jumpTo">跳转</a-button>
   </div>
 </template>
 
@@ -40,5 +40,6 @@ export default {
   height: 568px;
   margin: 0 auto;
   border: 1px solid #efefef;
+  background-color: #fff;
 }
 </style>
