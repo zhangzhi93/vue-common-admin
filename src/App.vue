@@ -1,6 +1,8 @@
 <template>
   <a-config-provider :locale="zhCN">
-    <router-view />
+    <keep-alive>
+      <router-view />
+    </keep-alive>
   </a-config-provider>
 </template>
 <script>

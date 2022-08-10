@@ -1,14 +1,46 @@
 <template>
   <div class="tree-select">
-    <el-popover v-model="visible" placement="bottom-start" trigger="click" :width="width" @show="computeWidth"
-      popper-class="tree-select-popover" transition="el-zoom-in-top">
-      <el-tree :data="treeData" :props="treeProps" @node-click="handleNodeClick" highlight-current
-        :expand-on-click-node="false" :node-key="nodeKey" empty-text="暂无数据" :current-node-key="value"
-        ref="tree"></el-tree>
-      <el-input :value="selectName" :size="size" :placeholder="placeholder" readonly :disabled="disabled"
-        @click="popSlideDown" class="tree-select-input" slot="reference" ref="input">
-        <i slot="suffix" :class="['el-input__icon', 'el-icon-arrow-down',visible?'is-reverse':'']"></i>
-      </el-input>
+    <el-popover
+      v-model="visible"
+      placement="bottom-start"
+      trigger="click"
+      :width="width"
+      @show="computeWidth"
+      popper-class="tree-select-popover"
+      transition="el-zoom-in-top"
+    >
+      <el-tree
+        :data="treeData"
+        :props="treeProps"
+        :show-checkbox="multiple"
+        :highlight-current="!multiple"
+        :expand-on-click-node="false"
+        :check-strictly="checkStrictly"
+        :node-key="nodeKey"
+        empty-text="暂无数据"
+        :current-node-key="value"
+        @node-click="onNodeClick"
+        @check-change="onCheckChange"
+        ref="tree"
+      />
+      <el-select
+        :disabled="disabled"
+        :value="showValue"
+        :size="size"
+        :multiple="multiple"
+        :placeholder="placeholder"
+        readonly
+        @click="visible = !visible"
+        @remove-tag="onRemoveTag"
+        :collapse-tags="collapseTags"
+        :multiple-limit="multipleLimit"
+        slot="reference"
+        ref="select"
+        popper-class="select-tree-default-popper"
+        class="n-select-tree-ipt"
+      >
+        <el-option v-for="item in options" :key="item[nodeKey]" :label="item[treeProps.label]" :value="item[nodeKey]" />
+      </el-select>
     </el-popover>
   </div>
 </template>
@@ -24,6 +56,7 @@ export default {
   props: {
     value: {
       type: [String, Number],
+      default: null
     },
     nodeKey: {
       type: String,
@@ -35,9 +68,25 @@ export default {
     },
     size: {
       type: String,
-      default: 'medium',
+      default: 'small',
     },
     disabled: {
+      type: Boolean,
+      default: false,
+    },
+    multiple: {
+      type: Boolean,
+      default: false,
+    },
+    checkStrictly: {
+      type: Boolean,
+      default: false,
+    },
+    multipleLimit: {
+      type: Number,
+      default: 0,
+    },
+    collapseTags: {
       type: Boolean,
       default: false,
     },
@@ -47,32 +96,33 @@ export default {
     },
     treeProps: {
       type: Object,
-      default() {
-        return {
-          children: 'children',
-          label: 'label'
-        }
-      }
-    }
+      default: () => ({
+        children: 'children',
+        label: 'label'
+      })
+    },
   },
   data() {
     return {
       visible: false,
-      selectName: '',
+      showValue: null,
+      options: [],
       width: 150,
-    }
+    };
   },
   watch: {
+    visible(val) {
+      const arrowDom = this.$refs.select.$el.querySelector('.el-select__caret');
+      val ? arrowDom.classList.add('is-reverse') : arrowDom.classList.remove('is-reverse');
+    },
     value: {
       handler(val) {
         if (val) {
           this.$nextTick(() => {
             this.$refs.tree.setCurrentKey(val);
-            this.$nextTick(() => {
-              const selectNode = this.$refs.tree.getCurrentNode();
-              this.selectName = selectNode ? this.$refs.tree.getCurrentNode()[this.treeProps.label] : '';
-            })
-          })
+          });
+          const selectNode = this.$refs.tree.getNode(val);
+          this.selectName = selectNode ? selectNode[this.treeProps.label] : '';
         } else {
           this.selectName = '';
         }
@@ -82,11 +132,8 @@ export default {
     treeData: {
       handler(val) {
         if (this.value) {
-          this.$refs.tree.setCurrentKey(this.value);
-          this.$nextTick(() => {
-            const selectNode = this.$refs.tree.getCurrentNode();
-            this.selectName = selectNode ? this.$refs.tree.getCurrentNode()[this.treeProps.label] : '';
-          })
+          const selectNode = this.$refs.tree.getNode(val);
+          this.selectName = selectNode ? selectNode[this.treeProps.label] : '';
         } else {
           this.selectName = '';
         }
@@ -96,23 +143,47 @@ export default {
   },
   methods: {
     computeWidth() {
-      this.width = this.$refs.input.$el.clientWidth;
+      this.width = this.$refs.select.$el.clientWidth;
     },
-    handleNodeClick(data, checked, node) {
+    onNodeClick(data, checked, node) {
+      if (this.multiple) {
+        return;
+      }
+      this.renderOptions([data]);
       this.$emit('change', data[this.nodeKey]);
       this.$emit('tree-click', data, checked, node);
       this.visible = false;
     },
-    popSlideDown() {
-      this.visible = !this.visible;
+    onCheckChange(data, checked, node) {
+      console.log(data, checked, node);
+      const checkedNodes = this.$refs.tree.getCheckedNodes();
+      console.log(checkedNodes);
+      this.renderOptions(checkedNodes);
+    },
+    onRemoveTag(val){
+      this.$refs.tree.setChecked(val, false, !this.checkStrictly);
+    },
+    // 当选择树节点时给select一个默认option，不然select不会反显数据
+    renderOptions(data) {
+      this.options = data.map(item => ({
+        [this.nodeKey]: item[this.nodeKey],
+        [this.treeProps.label]: item[this.treeProps.label]
+      }));
+      this.showValue = this.multiple ? data.map(item => item[this.nodeKey]) : data[0][this.nodeKey];
     }
   },
-}
+};
 </script>
 
 <style lang="less">
-.tree-select-input {
-  .el-input__inner {
+.tree-select {
+  .el-select .el-input.is-disabled .el-input__inner {
+    cursor: pointer;
+    background-color: #fff;
+    border-color: #dcdfe6;
+    color: #606266;
+  }
+  .el-input.is-disabled .el-input__icon {
     cursor: pointer;
   }
 }
@@ -124,9 +195,10 @@ export default {
     background-color: #e3f2fd;
   }
 }
-.tree-select {
-  .el-input .el-input__icon.is-reverse {
-    transform: rotate(-180deg);
-  }
+.select-tree-default-popper{
+  display: none;
+}
+.n-select-tree-ipt{
+  width: 100%;
 }
 </style>

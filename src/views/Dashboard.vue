@@ -3,7 +3,7 @@
     <a-row :gutter="20">
       <a-col :span="6">
         <a-card :body-style="{ padding: '0px' }" class="user-card">
-          <img src="../assets/hamburger.png" class="image">
+          <img src="../assets/hamburger.png" class="image" />
           <div style="padding: 14px;">
             <span>好吃的汉堡</span>
             <div class="bottom clearfix">
@@ -15,7 +15,7 @@
       </a-col>
       <a-col :span="18">
         <a-card :body-style="{ padding: '0px' }" class="user-card">
-          <img src="../assets/hamburger.png" class="image">
+          <img src="../assets/hamburger.png" class="image" />
           <div style="padding: 14px;">
             <span>好吃的汉堡</span>
             <div class="bottom clearfix">
@@ -30,18 +30,26 @@
       <a-table :columns="columns" :data-source="tableData" style="width: 100%" />
     </a-row>
     <div>
-      <div>{{beforeArray}}</div>
+      <div>{{ beforeArray }}</div>
       <a-button type="primary" size="small" @click="move">移动</a-button>
-      <div>{{afterArray}}</div>
+      <div>{{ afterArray }}</div>
+    </div>
+    <div>
+      <pagination v-model="page" :total="50" @change="onPageChange" @size-change="onShowSizeChange" />
     </div>
   </div>
 </template>
 <script>
 import { arrayMoveImmutable } from 'array-move';
+import Pagination from '@/components/Pagination';
 export default {
   name: 'Dashboard',
+  components: {
+    Pagination
+  },
   data() {
     return {
+      page: 1,
       currentDate: new Date(),
       beforeArray: [0, 1, 2, 3, 4, 5, 6, 7],
       afterArray: [],
@@ -92,6 +100,12 @@ export default {
   methods: {
     move() {
       this.afterArray = arrayMoveImmutable(this.beforeArray, 4, 1)
+    },
+    onPageChange(page){
+      console.log(page)
+    },
+    onShowSizeChange(pageSize){
+      console.log(pageSize)
     }
   },
 };

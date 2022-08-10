@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import TreeSelect from '../../components/TreeSelect.vue';
+import TreeSelect from '@/components/TreeSelect.vue';
 
 export default {
   name: 'DiyTreeSelect',
