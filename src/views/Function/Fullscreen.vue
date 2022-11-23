@@ -1,11 +1,9 @@
 <template>
-  <div>
-    <expand-card>
-      <div>
-        <h1>这是文字内容</h1>
-      </div>
-    </expand-card>
-  </div>
+  <expand-card>
+    <div>
+      <h1>这是文字内容</h1>
+    </div>
+  </expand-card>
 </template>
 
 <script>
@@ -18,7 +16,7 @@ export default {
   },
   data() {
     return {
-    }
+    };
   },
   methods: {
 

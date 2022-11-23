@@ -1,15 +1,11 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import { createPinia } from 'pinia';
 
-import Layout from './layout';
-import App from './app';
+import { useAppStore } from './modules/app';
+import { useLayoutStore } from './modules/layout';
 
-Vue.use(Vuex);
 
-// 导出需要的模块
-export default new Vuex.Store({
-  modules: {
-    Layout,
-    App
-  },
-});
+const pinia = createPinia();
+
+export { useAppStore, useLayoutStore };
+
+export default pinia;

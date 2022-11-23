@@ -1,7 +1,7 @@
 /*
  * 获取deep深度的树 return data.map(item => this.getTreeDataByDeep(item, 0));
  */
-function getTreeDataByDeep (data, deep, point, key = 'children') {
+function getTreeDataByDeep(data, deep, point, key = 'children') {
   return data.map(item => {
     const temp = { ...item };
     if (point < deep) {
@@ -18,12 +18,12 @@ function getTreeDataByDeep (data, deep, point, key = 'children') {
 /*
  * url 需要分割的url  menuLevel = 2 时 /a/b/c/d -> ['a','b']
  */
-function getMenuNameFromUrl (url, menuLevel) {
+function getMenuNameFromUrl(url, menuLevel) {
   return url.substr(1).split('/').slice(0, menuLevel);
 }
 
 //
-function getLastMenuListFromName (list = [], names, index, callback) {
+function getLastMenuListFromName(list = [], names, index, callback) {
   const subList = names ? list.find(item => item.name === names[index]) : list[0];
   if (subList) {
     if (subList.hasOwnProperty('children') && subList.children.length > 0) {
@@ -41,7 +41,7 @@ function getLastMenuListFromName (list = [], names, index, callback) {
  * MenuList 菜单嵌套数组
  * url 需要分割的url(地址栏中#/后面的地址)
  */
-function getMenuInfoFromUrl (menuList, pathKeys) {
+function getMenuInfoFromUrl(menuList, pathKeys) {
   let LastMenu = {};
   getLastMenuListFromName(menuList, pathKeys, 0, data => {
     LastMenu = data;
@@ -53,7 +53,7 @@ function getMenuInfoFromUrl (menuList, pathKeys) {
  *
  * url 需要分割的url
  */
-function getActiveTabInfo (list, url) {
+function getActiveTabInfo(list, url) {
   return list.find(item => {
     const [path] = item.path.split('?');
     return path === url;
@@ -63,7 +63,7 @@ function getActiveTabInfo (list, url) {
 /*
  * 递归转换
  */
-function recursionConvert (data = [], format, key = 'children') {
+function recursionConvert(data = [], format, key = 'children') {
   return data.map(item => {
     const temp = format(item);
     if (temp && item[key]) {
@@ -76,7 +76,7 @@ function recursionConvert (data = [], format, key = 'children') {
 /*
  * 递归过滤
  */
-function recursionFilter (data = [], permission, key = 'children') {
+function recursionFilter(data = [], permission = 'ALL', key = 'children') {
   return data.filter(item => {
     if (permission === 'ALL' || item.meta.roles.includes('ALL') || item.meta.roles.includes(permission)) {
       if (item[key] && item[key].length > 0) {

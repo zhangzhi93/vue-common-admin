@@ -1,6 +1,5 @@
-import Vue from 'vue';
-
 function addWaterMarker(parentNode, title, describe, font, textColor) { // parentNode：要插入的元素， title:标题，describe：描述，font：字体，textColor：字体颜色
+  console.log(parentNode, title, describe, font, textColor);
   const img = document.createElement('canvas');
   parentNode.appendChild(img);
   img.width = 240;
@@ -30,10 +29,12 @@ function addWaterMarker(parentNode, title, describe, font, textColor) { // paren
   parentNode.appendChild(div);
 }
 
-export default () => {
-  Vue.directive('watermark', {
-    bind(el, binding) {
-      addWaterMarker(el, binding.value.title, binding.value.describe, binding.value.font, binding.value.textColor);
-    }
-  });
+export default {
+  install(app, options) {
+    app.directive('watermark', {
+      mounted(el, binding) {
+        addWaterMarker(el, binding.value.title, binding.value.describe, binding.value.font, binding.value.textColor);
+      }
+    });
+  }
 };

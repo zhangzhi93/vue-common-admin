@@ -1,30 +1,57 @@
 <template>
-  <vue-antd-layout :collapsed.sync="collapsed" :menu-data="getPermissionMenu" :selectedKeys="getSelectedKeys"
-    :openKeys="getOpenKeys" title="Antd Layout" :show-footer="false" :trigger="null" @menuClick="onMenuClick"
-    class="coli-layout">
-    <div slot="rightContent" class="right-actions">
-      <a-dropdown :trigger="['click']">
-        <div class="avatar" @click="e => e.preventDefault()">
-          <a-avatar :size="28" icon="user" />
-          <span class="name" v-html="getLoginInfo.nickname || '&nbsp;'" />
-        </div>
-        <a-menu slot="overlay">
-          <a-menu-item @click="onQuit">退出登录</a-menu-item>
-        </a-menu>
-      </a-dropdown>
-    </div>
-    <layout-tabs slot="navTabs" type="scroll" :tabs-data="getTabList" :active-name="getTabActive"
-      @tab-click="onTabClick" @tab-remove="onTabRemove" @contextmenu="onContextmenu"/>
-    <div class="content" v-watermark="{ title: getLoginInfo.nickname }">
+  <vue-antd-layout
+    v-model:collapsed="data.collapsed"
+    title="Antd Layout"
+    :menu-data="layoutStore.getPermissionMenu"
+    :selectedKeys="layoutStore.getSelectedKeys"
+    :openKeys="layoutStore.getOpenKeys"
+    :show-footer="false"
+    :trigger="null"
+    class="coli-layout"
+    @menu-click="onMenuClick"
+  >
+    <template #rightContent>
+      <div class="right-actions">
+        <a-dropdown :trigger="['click']">
+          <div class="avatar" @click="e => e.preventDefault()">
+            <a-avatar :size="28" icon="user" />
+            <span class="name" v-html="appStore.getLoginInfo.nickname || '&nbsp;'" />
+          </div>
+          <template #overlay>
+            <a-menu>
+              <a-menu-item @click="onQuit">退出登录</a-menu-item>
+            </a-menu>
+          </template>
+        </a-dropdown>
+      </div>
+    </template>
+    <template #navTabs>
+      <layout-tabs
+        :activeKey="layoutStore.getActiveTab"
+        animated
+        :tabs-data="layoutStore.getTabList"
+        type="flex"
+        @tab-click="onTabClick"
+        @tab-remove="onTabRemove"
+        @contextmenu="onContextmenu"
+      />
+    </template>
+    <div v-watermark="{ title: appStore.getLoginInfo.nickname }" class="content">
       <router-view />
     </div>
-    <div class="contextmenu-container" v-show="contextmenuElem.visible"
-      :style="{ left: `${contextmenuElem.left}px`, top: `${contextmenuElem.top}px` }">
+    <!-- <div class="content">
+      <router-view />
+    </div> -->
+    <div
+      v-show="data.contextmenuElem.visible"
+      class="contextmenu-container"
+      :style="{ left: `${data.contextmenuElem.left}px`, top: `${data.contextmenuElem.top}px` }"
+    >
       <div class="contextmenu-content">
         <ul>
-          <template v-for="item in contextmenuData">
-            <li v-if="item.type === 'divider'" class="ant-dropdown-menu-item-divider"></li>
-            <li v-else class="contextmenu-menu-item" :key="item.key">
+          <template v-for="item in data.contextmenuData" :key="item.key">
+            <li v-if="item.type === 'divider'" class="ant-dropdown-menu-item-divider" />
+            <li v-else class="contextmenu-menu-item">
               <span class="contextmenu-menu-title-content" @click="onSelectContextmenu(item.key)">{{ item.title
               }}</span>
             </li>
@@ -35,64 +62,67 @@
   </vue-antd-layout>
 </template>
 
-<script>
-import { mapGetters, mapMutations } from 'vuex';
+<script setup>
+import { useRouter } from 'vue-router';
+import { useAppStore, useLayoutStore } from '@/store';
 
-export default {
-  name: 'App',
-  data() {
-    return {
-      collapsed: false,
-      contextmenuElem: {
-        data: [{
-          title: '关闭',
-          key: 'c'
-        }, {
-          title: '关闭其他',
-          key: 'co'
-        }, {
-          title: '关闭右侧',
-          key: 'cr '
-        }],
-        visible: false,
-        top: 0,
-        left: 0
-      },
-    };
+const data = reactive({
+  collapsed: false,
+  contextmenuElem: {
+    data: [{
+      title: '关闭',
+      key: 'c'
+    }, {
+      title: '关闭其他',
+      key: 'co'
+    }, {
+      title: '关闭右侧',
+      key: 'cr '
+    }],
+    visible: false,
+    top: 0,
+    left: 0
   },
-  computed: {
-    ...mapGetters(['getSelectedKeys', 'getOpenKeys', 'getTabList', 'getTabActive', 'getLoginInfo', 'getPermissionMenu'])
-  },
-  methods: {
-    ...mapMutations({
-      removeTabItem: 'REMOVE_TAB_ITEM',
-    }),
-    onMenuClick(data) {
-      this.$router.push(data.item.value.path);
+  contextmenuData:[]
+});
+
+const appStore = useAppStore();
+const layoutStore = useLayoutStore();
+
+console.log(layoutStore.getActiveTab);
+
+const router = useRouter();
+
+onMounted(() => {
+  // layoutStore.renderRouters();
+});
+
+
+const onMenuClick = (data) => {
+  router.push(data.item.value.path);
+};
+
+const onTabClick = (data) => {
+  router.replace(data.path);
+};
+
+const onTabRemove = (data) => {
+  layoutStore.removeTabItem({
+    payload: {
+      name: data.name
     },
-    onTabClick(data) {
-      this.$router.replace(data.path);
-    },
-    onTabRemove(data) {
-      this.removeTabItem({
-        payload: {
-          name: data.name
-        },
-        callback: (res) => {
-          this.$router.replace(res.path);
-        }
-      });
-    },
-    onContextmenu(e){
-      console.log(e)
-    },
-    onQuit() {
-      this.$router.replace('/login');
+    callback: (res) => {
+      router.replace(res.path);
     }
-  },
-  mounted() {
+  });
+};
 
-  }
+const onContextmenu = (e) => {
+  console.log(e);
+};
+
+const onQuit = () => {
+  router.replace('/login');
 };
 </script>
 
@@ -130,7 +160,7 @@ export default {
   padding: 0 12px;
   transition: all 0.3s;
 
-  /deep/.ant-avatar {
+  :deep(.ant-avatar) {
     margin-right: 6px;
   }
 

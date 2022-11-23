@@ -1,3 +1,3 @@
 <template>
-  <span>回复</span>
+  <router-view />
 </template>

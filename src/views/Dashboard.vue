@@ -3,7 +3,7 @@
     <a-row :gutter="20">
       <a-col :span="6">
         <a-card :body-style="{ padding: '0px' }" class="user-card">
-          <img src="../assets/hamburger.png" class="image" />
+          <img src="../assets/hamburger.png" class="image">
           <div style="padding: 14px;">
             <span>好吃的汉堡</span>
             <div class="bottom clearfix">
@@ -15,7 +15,7 @@
       </a-col>
       <a-col :span="18">
         <a-card :body-style="{ padding: '0px' }" class="user-card">
-          <img src="../assets/hamburger.png" class="image" />
+          <img src="../assets/hamburger.png" class="image">
           <div style="padding: 14px;">
             <span>好吃的汉堡</span>
             <div class="bottom clearfix">
@@ -41,7 +41,7 @@
 </template>
 <script>
 import { arrayMoveImmutable } from 'array-move';
-import Pagination from '@/components/Pagination';
+import Pagination from '@/components/Pagination.vue';
 export default {
   name: 'Dashboard',
   components: {
@@ -99,13 +99,13 @@ export default {
   },
   methods: {
     move() {
-      this.afterArray = arrayMoveImmutable(this.beforeArray, 4, 1)
+      this.afterArray = arrayMoveImmutable(this.beforeArray, 4, 1);
     },
     onPageChange(page){
-      console.log(page)
+      console.log(page);
     },
     onShowSizeChange(pageSize){
-      console.log(pageSize)
+      console.log(pageSize);
     }
   },
 };

@@ -5,19 +5,40 @@
       <pre class="result">{{ form.name }}</pre>
     </el-form-item>
     <el-form-item label="异步搜索">
-      <treeselect v-model="form.sync" :multiple="true" :async="true" :load-options="loadOptions"
-        defaultOptions placeholder="请选择" searchPromptText="请输入" />
+      <treeselect
+        v-model="form.sync"
+        :multiple="true"
+        :async="true"
+        :load-options="loadOptions"
+        defaultOptions
+        placeholder="请选择"
+        searchPromptText="请输入"
+      />
       <pre class="result">{{ form.sync }}</pre>
     </el-form-item>
     <el-form-item label="本地搜索">
-      <treeselect v-model="form.local" :multiple="true" :options="options" :searchable="false"
-        value-consists-of="LEAF_PRIORITY" showCount :limit="5" :limitText="renderLimitText"
-        placeholder="请选择" />
+      <treeselect
+        v-model="form.local"
+        :multiple="true"
+        :options="options"
+        :searchable="false"
+        value-consists-of="LEAF_PRIORITY"
+        showCount
+        :limit="5"
+        :limitText="renderLimitText"
+        placeholder="请选择"
+      />
       <pre class="result">{{ form.local }}</pre>
     </el-form-item>
     <el-form-item label="vuex异步加载子节点">
-      <treeselect v-model="form.vuexSync" :multiple="true" :async="true" :searchable="false"
-        :load-options="loadOptions" placeholder="请选择" />
+      <treeselect
+        v-model="form.vuexSync"
+        :multiple="true"
+        :async="true"
+        :searchable="false"
+        :load-options="loadOptions"
+        placeholder="请选择"
+      />
       <pre class="result">{{ form.vuexSync }}</pre>
     </el-form-item>
   </el-form>

@@ -1,6 +1,6 @@
 <template>
   <div v-moveable class="move-block">
-    <div v-resize class="resize"></div>
+    <div v-resize class="resize" />
   </div>
 </template>
 
@@ -10,7 +10,7 @@ export default {
   name: 'Moveable',
   data() {
     return {
-    }
+    };
   },
   methods: {
 

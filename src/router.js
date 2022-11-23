@@ -1,31 +1,12 @@
-import Vue from 'vue';
-import Router from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 import Login from '@/layouts/LoginLayout.vue';
 import HomeLayout from '@/layouts/HomeLayout.vue';
 import Dashboard from '@/views/Dashboard.vue';
-
-Vue.use(Router);
-
-const RouteView = {
-  name: 'RouteView',
-  render: h => h('router-view')
-};
+import RouteView from '@/layouts/RouteView.vue';
+import { AimOutlined } from '@ant-design/icons-vue';
 
 // 要渲染的菜单深度
 export const menuLevel = 2;
-
-export const constantRouterMap = [
-  {
-    path: '/login',
-    name: 'login',
-    component: Login,
-  },
-  {
-    path: '/404',
-    name: '404',
-    component: () => import('@/views/404.vue'),
-  }
-];
 
 export const asyncRouterMap = [
   {
@@ -44,7 +25,18 @@ export const asyncRouterMap = [
         meta: {
           title: '状态概览',
           nav: ['状态概览'],
-          icon: 'menu',
+          icon: AimOutlined,
+          roles: ['ALL'],
+        },
+      },
+      {
+        path: '/menu1',
+        name: 'menu1',
+        component: () => import('./views/Wechat/menu.vue'),
+        meta: {
+          title: '菜单',
+          nav: ['菜单'],
+          icon: AimOutlined,
           roles: ['ALL'],
         },
       },
@@ -55,7 +47,7 @@ export const asyncRouterMap = [
         meta: {
           title: '微信配置',
           nav: ['微信配置'],
-          icon: 'menu',
+          icon: AimOutlined,
           roles: ['ALL'],
         },
         children: [
@@ -66,7 +58,7 @@ export const asyncRouterMap = [
             meta: {
               title: '菜单管理',
               nav: ['微信配置', '菜单管理'],
-              icon: 'menu',
+              icon: AimOutlined,
               roles: ['ALL'],
             },
           },
@@ -77,10 +69,10 @@ export const asyncRouterMap = [
             meta: {
               title: '关键词回复',
               nav: ['微信配置', '关键词回复'],
-              icon: 'menu',
+              icon: AimOutlined,
               roles: ['ALL'],
             },
-          }
+          },
         ],
       },
       {
@@ -90,21 +82,21 @@ export const asyncRouterMap = [
         meta: {
           title: '插件测试',
           nav: ['插件测试'],
-          icon: 'menu',
+          icon: AimOutlined,
           roles: ['ALL'],
         },
         children: [
-          {
-            path: '/plugin/venn',
-            name: 'venn',
-            component: () => import('./views/Plugin/Venn.vue'),
-            meta: {
-              title: '韦恩图',
-              nav: ['插件测试', '韦恩图'],
-              icon: 'menu',
-              roles: ['ALL'],
-            },
-          },
+          // {
+          //   path: '/plugin/venn',
+          //   name: 'venn',
+          //   component: () => import('./views/plugin/Venn.vue'),
+          //   meta: {
+          //     title: '韦恩图',
+          //     nav: ['插件测试', '韦恩图'],
+          //     icon: AimOutlined,
+          //     roles: ['ALL'],
+          //   },
+          // },
           {
             path: '/plugin/tree-select',
             name: 'tree-select',
@@ -112,7 +104,7 @@ export const asyncRouterMap = [
             meta: {
               title: '树选择',
               nav: ['插件测试', '树选择'],
-              icon: 'menu',
+              icon: AimOutlined,
               roles: ['ALL'],
             },
           },
@@ -123,7 +115,7 @@ export const asyncRouterMap = [
             meta: {
               title: '日历',
               nav: ['插件测试', '日历'],
-              icon: 'menu',
+              icon: AimOutlined,
               roles: ['ALL'],
             },
           },
@@ -134,7 +126,7 @@ export const asyncRouterMap = [
             meta: {
               title: '播放器',
               nav: ['插件测试', '播放器'],
-              icon: 'menu',
+              icon: AimOutlined,
               roles: ['ALL'],
             },
           },
@@ -145,7 +137,7 @@ export const asyncRouterMap = [
             meta: {
               title: '百度地图',
               nav: ['插件测试', '百度地图'],
-              icon: 'menu',
+              icon: AimOutlined,
               roles: ['ALL'],
             },
           }
@@ -158,7 +150,7 @@ export const asyncRouterMap = [
         meta: {
           title: '自定义功能',
           nav: ['自定义功能'],
-          icon: 'menu',
+          icon: AimOutlined,
           roles: ['ALL'],
         },
         children: [
@@ -169,7 +161,7 @@ export const asyncRouterMap = [
             meta: {
               title: '自定义树选择',
               nav: ['自定义功能', '自定义树选择'],
-              icon: 'menu',
+              icon: AimOutlined,
               roles: ['ALL'],
             },
           },
@@ -180,7 +172,7 @@ export const asyncRouterMap = [
             meta: {
               title: '拖动布局',
               nav: ['自定义功能', '拖动布局'],
-              icon: 'menu',
+              icon: AimOutlined,
               roles: ['ALL'],
             },
           },
@@ -191,23 +183,64 @@ export const asyncRouterMap = [
             meta: {
               title: '自定义全屏',
               nav: ['自定义功能', '自定义全屏'],
-              icon: 'menu',
+              icon: AimOutlined,
               roles: ['ALL'],
             },
           }
+        ],
+      },
+      {
+        path: '/vtk',
+        component: RouteView,
+        name: 'vtk',
+        meta: {
+          title: 'vtk',
+          nav: ['vtk'],
+          icon: AimOutlined,
+          roles: ['ALL'],
+        },
+        children: [
+          {
+            path: '/vtk/pointcloud',
+            name: 'pointcloud',
+            component: () => import('./views/vtk/pointCloud/index.vue'),
+            meta: {
+              title: '点云',
+              nav: ['vtk', '点云'],
+              icon: AimOutlined,
+              roles: ['ALL'],
+            },
+          },
         ],
       }
     ]
   },
   {
-    path: '*',
+    path: '/:pathMatch(.*)',
     redirect: '/404',
     meta: {
       roles: ['ALL']
     },
   }
-]
+];
 
-export default new Router({
+
+export const constantRouterMap = [
+  {
+    path: '/login',
+    name: 'login',
+    component: Login,
+  },
+  {
+    path: '/404',
+    name: '404',
+    component: () => import('@/views/404.vue'),
+  },
+  ...asyncRouterMap
+];
+
+
+export default createRouter({
+  history: createWebHashHistory(),
   routes: constantRouterMap,
 });

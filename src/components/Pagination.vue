@@ -6,8 +6,8 @@
       :data-source="sizeInput.pageSizeOptions"
       :placeholder="sizeInput.placeholder"
       defaultActiveFirstOption
-      @change="onSizeChange"
       class="pagination-auto-complete"
+      @change="onSizeChange"
     >
       <a-input suffix="条/页" />
     </a-auto-complete>
@@ -62,7 +62,7 @@ export default {
     },
     'sizeInput.pageSizeOptions': {
       handler(option) {
-        this.pageSize = option[0]
+        this.pageSize = option[0];
       },
       immediate: true
     },

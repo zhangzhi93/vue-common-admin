@@ -1,5 +1,5 @@
 import router from './router';
-import store from './store/index';
+import { useAppStore, useLayoutStore } from '@/store';
 import storage from 'store';
 import NProgress from 'nprogress';
 import '@/components/NProgress/nprogress.less';
@@ -10,16 +10,25 @@ const loginRoutePath = '/login';
 const allowList = ['login', '404'];
 
 router.beforeEach((to, from, next) => {
+  const layoutStore = useLayoutStore();
+  const appStore = useAppStore();
   NProgress.start();
   if (storage.get('token')) {
-    if (store.getters.addRouters.length === 0) {
-      store.dispatch('GenerateRoutes', store.getters.getLoginInfo.permission).then((accessedRouters) => {
-        router.addRoutes(accessedRouters);
-        store.commit('SET_ACTIVE_MENU', to.path);
-        next({ ...to, replace: true });
+    if (layoutStore.dynamicRouters.length === 0) {
+      layoutStore.generateRoutes(appStore.getLoginInfo.permission).then((accessedRouters) => {
+        console.log(accessedRouters);
+        accessedRouters.forEach(r => {
+          router.addRoute(r);
+        });
+
+        console.log(router.getRoutes());
+        console.log(router.hasRoute('menu'));
+        layoutStore.setActiveMenu(to.path);
+        // next({ ...to, replace: true });
+        router.replace(to.fullPath);
       });
     } else {
-      store.commit('SET_ACTIVE_MENU', to.path);
+      layoutStore.setActiveMenu(to.path);
       next();
     }
   } else {
