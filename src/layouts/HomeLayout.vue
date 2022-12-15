@@ -36,7 +36,7 @@
         @contextmenu="onContextmenu"
       />
     </template>
-    <div v-watermark="{ title: appStore.getLoginInfo.nickname }" class="content">
+    <div v-watermark="{ title: appStore.getLoginInfo.nickname||'Janz' }" class="content">
       <router-view />
     </div>
     <!-- <div class="content">
