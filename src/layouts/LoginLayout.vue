@@ -22,11 +22,16 @@
         <a-form-item prop="code">
           <a-row>
             <a-col :span="10">
-              <a-input v-model="data.loginForm.code" auto-complete="off" placeholder="验证码" @keyup.enter="handleLogin" />
+              <a-input
+                v-model="data.loginForm.code"
+                auto-complete="off"
+                placeholder="验证码"
+                @keyup.enter="handleLogin"
+              />
             </a-col>
             <a-col :span="8">
               <div class="login-code">
-                <img :src="data.codeUrl" style="height:32px;margin:0 15px 0 20px" @click="getCode">
+                <img :src="data.codeUrl" style="height: 32px; margin: 0 15px 0 20px" @click="getCode" />
               </div>
             </a-col>
             <a-col :span="5">
@@ -54,7 +59,6 @@
 </template>
 
 <script setup>
-
 import storage from 'store';
 import { useRouter } from 'vue-router';
 import { useAppStore } from '@/store';
@@ -67,19 +71,15 @@ const data = reactive({
     username: 'admin',
     password: '123456',
     code: '1234',
-    uuid: ''
+    uuid: '',
   },
   codeUrl: '',
   rememberMe: false,
   rules: {
-    username: [
-      { required: true, trigger: 'blur', message: '用户名不能为空' }
-    ],
-    password: [
-      { required: true, trigger: 'blur', message: '密码不能为空' }
-    ],
-    code: [{ required: true, trigger: 'change', message: '验证码不能为空' }]
-  }
+    username: [{ required: true, trigger: 'blur', message: '用户名不能为空' }],
+    password: [{ required: true, trigger: 'blur', message: '密码不能为空' }],
+    code: [{ required: true, trigger: 'change', message: '验证码不能为空' }],
+  },
 });
 
 const appStore = useAppStore();
@@ -91,31 +91,33 @@ onBeforeMount(() => {
 });
 
 const getCode = () => {
-  this.$api.login.getCaptchaImage().then(data => {
+  this.$api.login.getCaptchaImage().then((data) => {
     data.codeUrl = 'data:image/gif;base64,' + data.img;
     data.loginForm.uuid = data.uuid;
   });
 };
 
 const handleLogin = () => {
-  debugger;
-  formRef.value.validate().then(() => {
-    data.loading = true;
-    const time = 7 * 24 * 60 * 60 * 1000;
-    setTimeout(() => {
-      const info = {
-        token: 'ab354djdkj3939',
-        nickname: 'janz',
-        permission: 'ALL'
-      };
-      storage.set('token', info.token, time);
-      appStore.setUserInfo(info);
-      data.loading = false;
-      router.replace('/');
-    }, 1500);
-  }).catch(error => {
-    console.log('error', error);
-  });
+  formRef.value
+    .validate()
+    .then(() => {
+      data.loading = true;
+      const time = 7 * 24 * 60 * 60 * 1000;
+      setTimeout(() => {
+        const info = {
+          token: 'ab354djdkj3939',
+          nickname: 'janz',
+          permission: 'ALL',
+        };
+        storage.set('token', info.token, time);
+        appStore.setUserInfo(info);
+        data.loading = false;
+        router.replace('/');
+      }, 1500);
+    })
+    .catch((error) => {
+      console.log('error', error);
+    });
 };
 </script>
 

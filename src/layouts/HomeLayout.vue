@@ -2,9 +2,9 @@
   <vue-antd-layout
     v-model:collapsed="data.collapsed"
     title="Antd Layout"
-    :menu-data="layoutStore.getPermissionMenu"
-    :selectedKeys="layoutStore.getSelectedKeys"
-    :openKeys="layoutStore.getOpenKeys"
+    :menu-data="permissionStore.routers"
+    :selected-keys="layoutStore.getSelectedKeys"
+    :open-keys="layoutStore.getOpenKeys"
     :show-footer="false"
     :trigger="null"
     class="coli-layout"
@@ -13,7 +13,7 @@
     <template #rightContent>
       <div class="right-actions">
         <a-dropdown :trigger="['click']">
-          <div class="avatar" @click="e => e.preventDefault()">
+          <div class="avatar" @click="(e) => e.preventDefault()">
             <a-avatar :size="28" icon="user" />
             <span class="name" v-html="appStore.getLoginInfo.nickname || '&nbsp;'" />
           </div>
@@ -27,7 +27,7 @@
     </template>
     <template #navTabs>
       <layout-tabs
-        :activeKey="layoutStore.getActiveTab"
+        :active-key="layoutStore.getActiveTab"
         animated
         :tabs-data="layoutStore.getTabList"
         type="flex"
@@ -36,8 +36,15 @@
         @contextmenu="onContextmenu"
       />
     </template>
-    <div v-watermark="{ title: appStore.getLoginInfo.nickname||'Janz' }" class="content">
-      <router-view />
+    <div v-watermark="{ title: appStore.getLoginInfo.nickname || 'Janz' }" class="content">
+      <router-view v-slot="{ Component, route }">
+        <transition name="fade-transform">
+          <!-- <keep-alive>
+            <component :is="Component" :key="route.path" />
+          </keep-alive> -->
+          <component :is="Component" :key="route.path" />
+        </transition>
+      </router-view>
     </div>
     <!-- <div class="content">
       <router-view />
@@ -52,7 +59,8 @@
           <template v-for="item in data.contextmenuData" :key="item.key">
             <li v-if="item.type === 'divider'" class="ant-dropdown-menu-item-divider" />
             <li v-else class="contextmenu-menu-item">
-              <span class="contextmenu-menu-title-content" @click="onSelectContextmenu(item.key)">{{ item.title
+              <span class="contextmenu-menu-title-content" @click="onSelectContextmenu(item.key)">{{
+                item.title
               }}</span>
             </li>
           </template>
@@ -64,30 +72,37 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
-import { useAppStore, useLayoutStore } from '@/store';
+import { useAppStore, useLayoutStore, usePermissionStore } from '@/store';
 
 const data = reactive({
   collapsed: false,
   contextmenuElem: {
-    data: [{
-      title: '关闭',
-      key: 'c'
-    }, {
-      title: '关闭其他',
-      key: 'co'
-    }, {
-      title: '关闭右侧',
-      key: 'cr '
-    }],
+    data: [
+      {
+        title: '关闭',
+        key: 'c',
+      },
+      {
+        title: '关闭其他',
+        key: 'co',
+      },
+      {
+        title: '关闭右侧',
+        key: 'cr ',
+      },
+    ],
     visible: false,
     top: 0,
-    left: 0
+    left: 0,
   },
-  contextmenuData:[]
+  contextmenuData: [],
 });
 
 const appStore = useAppStore();
 const layoutStore = useLayoutStore();
+const permissionStore = usePermissionStore();
+
+console.log(permissionStore);
 
 console.log(layoutStore.getActiveTab);
 
@@ -97,8 +112,8 @@ onMounted(() => {
   // layoutStore.renderRouters();
 });
 
-
 const onMenuClick = (data) => {
+  console.log(data);
   router.push(data.item.value.path);
 };
 
@@ -109,11 +124,11 @@ const onTabClick = (data) => {
 const onTabRemove = (data) => {
   layoutStore.removeTabItem({
     payload: {
-      name: data.name
+      name: data.name,
     },
     callback: (res) => {
       router.replace(res.path);
-    }
+    },
   });
 };
 
@@ -171,8 +186,7 @@ const onQuit = () => {
 }
 
 .content {
-  margin: 15px;
-  min-height: calc(100vh - 109px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  min-height: calc(100vh - 80px);
+  // box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 </style>

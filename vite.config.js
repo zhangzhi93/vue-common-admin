@@ -8,7 +8,7 @@ export default {
   base: './',
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src')
+      '@': path.resolve(__dirname, './src'),
     },
   },
   plugins: [
@@ -23,14 +23,18 @@ export default {
       },
     }),
     Components({
-      resolvers: [AntDesignVueResolver()],
+      resolvers: [
+        AntDesignVueResolver({
+          importStyle: false, // css in js
+        }),
+      ],
     }),
   ],
   css: {
     preprocessorOptions: {
       less: {
         javascriptEnabled: true,
-      }
+      },
     },
   },
   server: {
@@ -42,8 +46,8 @@ export default {
       '/api': {
         target: 'http://192.168.10.10:8094',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/nuc-api/, 'nuc-api')
+        rewrite: (path) => path.replace(/^\/nuc-api/, 'nuc-api'),
       },
-    }
-  }
+    },
+  },
 };

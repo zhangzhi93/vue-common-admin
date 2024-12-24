@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mobile">
-      <calendar-panel @change="onChange" v-model="date" :disableDate="disableDate"></calendar-panel>
+      <calendar-panel :date="date" :disable="disableDate" @select="onChange"></calendar-panel>
     </div>
     <a-button type="primary" @click="jumpTo">跳转</a-button>
   </div>
@@ -17,20 +17,20 @@ export default {
   },
   data() {
     return {
-      date: '2019/10/18'
+      date: '2019/10/18',
     };
   },
   methods: {
     onChange(val) {
-      console.log(val)
+      console.log(val);
     },
     jumpTo() {
-      this.date = '2019/10/09'
+      this.date = '2019/10/09';
     },
     disableDate(date) {
       return date.split('/')[2] === '12';
-    }
-  }
+    },
+  },
 };
 </script>
 

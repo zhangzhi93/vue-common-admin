@@ -1,6 +1,13 @@
 import { defineStore } from 'pinia';
 import { asyncRouterMap, menuLevel } from '../../router';
-import { getMenuNameFromUrl, getMenuInfoFromUrl, getActiveTabInfo, recursionConvert, recursionFilter, getTreeDataByDeep } from '../../utils/utils';
+import {
+  getMenuNameFromUrl,
+  getMenuInfoFromUrl,
+  getActiveTabInfo,
+  recursionConvert,
+  recursionFilter,
+  getTreeDataByDeep,
+} from '../../utils/utils';
 
 export const useLayoutStore = defineStore('layout', {
   state: () => {
@@ -16,20 +23,20 @@ export const useLayoutStore = defineStore('layout', {
   },
   getters: {
     // 获取左侧菜单列激活菜单
-    getSelectedKeys: state => {
+    getSelectedKeys: (state) => {
       return state.pathKeys.slice(-1);
     },
-    getOpenKeys: state => {
+    getOpenKeys: (state) => {
       return state.pathKeys.slice(0, -1);
     },
     // 获取最终渲染的菜单
-    getPermissionMenu: state => state.permissionMenu,
+    getPermissionMenu: (state) => state.permissionMenu,
     //
-    getDynamicRouters: state => state.dynamicRouters,
+    getDynamicRouters: (state) => state.dynamicRouters,
     // 获取tab列表
-    getTabList: state => state.tabList,
+    getTabList: (state) => state.tabList,
     //
-    getActiveTab: state => state.activeTab,
+    getActiveTab: (state) => state.activeTab,
   },
   actions: {
     initTabList(data) {
@@ -62,31 +69,39 @@ export const useLayoutStore = defineStore('layout', {
         this.setActiveTab(activeTabInfo.name);
       } else {
         this.setActiveTab(activeMenu.name);
-        this.tabList.push({ title: activeMenu.title, path: tabPath + query, name: activeMenu.name, key: activeMenu.name });
+        this.tabList.push({
+          title: activeMenu.title,
+          path: tabPath + query,
+          name: activeMenu.name,
+          key: activeMenu.name,
+        });
         // this.tabList = [...this.tabList, { title: activeMenu.title, path: tabPath + query, name: activeMenu.name }];
       }
     },
     removeTabItem({ payload, callback }) {
-      const tabIndex = this.tabList.findIndex(item => item.name === payload.name);
+      const tabIndex = this.tabList.findIndex((item) => item.name === payload.name);
       this.tabList.splice(tabIndex, 1);
       callback && callback(this.tabList[tabIndex - 1]);
     },
     renderRouters() {
       const accessedRouters = recursionFilter(asyncRouterMap);
-      const index = accessedRouters.findIndex(item => item.path === '/');
-      const permissionMenuData = recursionConvert(getTreeDataByDeep(accessedRouters[index].children, menuLevel, 1), item => {
-        if (item.meta.hide) {
-          return null;
-        } else {
-          return {
-            path: item.path,
-            name: item.name,
-            title: item.meta.title,
-            icon: item.meta.icon,
-            nav: item.meta.nav
-          };
-        }
-      });
+      const index = accessedRouters.findIndex((item) => item.path === '/');
+      const permissionMenuData = recursionConvert(
+        getTreeDataByDeep(accessedRouters[index].children, menuLevel, 1),
+        (item) => {
+          if (item.meta.hide) {
+            return null;
+          } else {
+            return {
+              path: item.path,
+              name: item.name,
+              title: item.meta.title,
+              icon: item.meta.icon,
+              nav: item.meta.nav,
+            };
+          }
+        },
+      );
       const initMenu = getMenuInfoFromUrl(permissionMenuData);
       // 初始化重定向
       accessedRouters[index].redirect = initMenu.path;
@@ -96,22 +111,25 @@ export const useLayoutStore = defineStore('layout', {
       this.setActiveMenu('/dashboard');
     },
     generateRoutes(permission) {
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         const accessedRouters = recursionFilter(asyncRouterMap, permission);
-        const index = accessedRouters.findIndex(item => item.path === '/');
-        const permissionMenuData = recursionConvert(getTreeDataByDeep(accessedRouters[index].children, menuLevel, 1), item => {
-          if (item.meta.hide) {
-            return null;
-          } else {
-            return {
-              path: item.path,
-              name: item.name,
-              title: item.meta.title,
-              icon: item.meta.icon,
-              nav: item.meta.nav
-            };
-          }
-        });
+        const index = accessedRouters.findIndex((item) => item.path === '/');
+        const permissionMenuData = recursionConvert(
+          getTreeDataByDeep(accessedRouters[index].children, menuLevel, 1),
+          (item) => {
+            if (item.meta.hide) {
+              return null;
+            } else {
+              return {
+                path: item.path,
+                name: item.name,
+                title: item.meta.title,
+                icon: item.meta.icon,
+                nav: item.meta.nav,
+              };
+            }
+          },
+        );
         const initMenu = getMenuInfoFromUrl(permissionMenuData);
         // 初始化重定向
         accessedRouters[index].redirect = initMenu.path;
@@ -120,6 +138,6 @@ export const useLayoutStore = defineStore('layout', {
         this.setPermissionMenu(permissionMenuData);
         resolve(accessedRouters);
       });
-    }
-  }
+    },
+  },
 });

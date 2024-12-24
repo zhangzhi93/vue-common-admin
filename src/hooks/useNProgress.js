@@ -1,0 +1,32 @@
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
+import { useCssVar } from '@vueuse/core';
+
+const primaryColor = useCssVar('--primary-color', document.documentElement);
+
+export const useNProgress = () => {
+  NProgress.configure({ showSpinner: false });
+
+  const initColor = async () => {
+    await nextTick();
+    const bar = document.getElementById('nprogress')?.getElementsByClassName('bar')[0];
+    if (bar) {
+      bar.style.background = unref(primaryColor.value);
+    }
+  };
+
+  initColor();
+
+  const start = () => {
+    NProgress.start();
+  };
+
+  const done = () => {
+    NProgress.done();
+  };
+
+  return {
+    start,
+    done,
+  };
+};

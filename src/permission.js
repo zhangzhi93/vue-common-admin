@@ -1,47 +1,68 @@
-import router from './router';
-import { useAppStore, useLayoutStore } from '@/store';
 import storage from 'store';
-import NProgress from 'nprogress';
-import '@/components/NProgress/nprogress.less';
+import globalSetting from './settings';
+import router from './router';
+import { usePermissionStore, useLayoutStore } from '@/store';
+import { useNProgress } from '@/hooks/useNProgress';
 
-NProgress.configure({ showSpinner: false });
+import { getMenuNameFromUrl } from '@/utils/utils';
 
-const loginRoutePath = '/login';
+const { start, done } = useNProgress();
+
 const allowList = ['login', '404'];
 
-router.beforeEach((to, from, next) => {
-  const layoutStore = useLayoutStore();
-  const appStore = useAppStore();
-  NProgress.start();
-  if (storage.get('token')) {
-    if (layoutStore.dynamicRouters.length === 0) {
-      layoutStore.generateRoutes(appStore.getLoginInfo.permission).then((accessedRouters) => {
-        console.log(accessedRouters);
-        accessedRouters.forEach(r => {
-          router.addRoute(r);
-        });
+router.beforeEach(async (to, from, next) => {
+  // 开始进度条
+  start();
+  // 修改标题名称
+  if (to.meta.title) {
+    document.title = to.meta.title + ' - ' + globalSetting.title;
+  }
 
-        console.log(router.getRoutes());
-        console.log(router.hasRoute('menu'));
-        layoutStore.setActiveMenu(to.path);
-        // next({ ...to, replace: true });
-        router.replace(to.fullPath);
-      });
-    } else {
-      layoutStore.setActiveMenu(to.path);
+  // 路由权限菜单校验
+  const permissionStore = usePermissionStore();
+  const layoutStore = useLayoutStore();
+
+  // 根据路由计算菜单展开和选中项
+  layoutStore.pathKeys = getMenuNameFromUrl(to.path);
+  console.log(layoutStore.pathKeys);
+  console.log(layoutStore.getSelectedKeys);
+  console.log(layoutStore.getOpenKeys);
+
+  // 如果跳转到登录页，则直接进行跳转
+  if (to.path === '/login') {
+    next();
+    return;
+  }
+
+  // 通过token判断是否已登录
+  if (storage.get('token')) {
+    // 判断是否获取到了动态路由
+    if (permissionStore.getIsAddRouters) {
       next();
+      return;
     }
+
+    const addRouters = await permissionStore.generateRoutes();
+
+    addRouters.forEach((route) => {
+      router.addRoute(route); // 动态添加可访问路由表
+    });
+
+    const redirectPath = from.query.redirect || to.path;
+    const redirect = decodeURIComponent(redirectPath);
+    const nextData = to.path === redirect ? { ...to, replace: true } : { path: redirect };
+    permissionStore.setIsAddRouters(true);
+    console.log(permissionStore.routers);
+    next(nextData);
   } else {
-    if (allowList.includes(to.name)) {
-      // 在免登录名单，直接进入
+    if (allowList.includes(to.path)) {
       next();
     } else {
-      next({ path: loginRoutePath, query: { redirect: to.fullPath } });
-      NProgress.done();
+      next(`/login?redirect=${to.path}`);
     }
   }
 });
 
 router.afterEach(() => {
-  NProgress.done();
+  done();
 });

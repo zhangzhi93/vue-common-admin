@@ -2,7 +2,7 @@
  * 获取deep深度的树 return data.map(item => this.getTreeDataByDeep(item, 0));
  */
 function getTreeDataByDeep(data, deep, point, key = 'children') {
-  return data.map(item => {
+  return data.map((item) => {
     const temp = { ...item };
     if (point < deep) {
       if (temp[key] && temp[key].length > 0) {
@@ -24,7 +24,7 @@ function getMenuNameFromUrl(url, menuLevel) {
 
 //
 function getLastMenuListFromName(list = [], names, index, callback) {
-  const subList = names ? list.find(item => item.name === names[index]) : list[0];
+  const subList = names ? list.find((item) => item.name === names[index]) : list[0];
   if (subList) {
     if (subList.hasOwnProperty('children') && subList.children.length > 0) {
       getLastMenuListFromName(subList.children, names, index + 1, callback);
@@ -43,7 +43,7 @@ function getLastMenuListFromName(list = [], names, index, callback) {
  */
 function getMenuInfoFromUrl(menuList, pathKeys) {
   let LastMenu = {};
-  getLastMenuListFromName(menuList, pathKeys, 0, data => {
+  getLastMenuListFromName(menuList, pathKeys, 0, (data) => {
     LastMenu = data;
   });
   return LastMenu;
@@ -54,7 +54,7 @@ function getMenuInfoFromUrl(menuList, pathKeys) {
  * url 需要分割的url
  */
 function getActiveTabInfo(list, url) {
-  return list.find(item => {
+  return list.find((item) => {
     const [path] = item.path.split('?');
     return path === url;
   });
@@ -64,20 +64,22 @@ function getActiveTabInfo(list, url) {
  * 递归转换
  */
 function recursionConvert(data = [], format, key = 'children') {
-  return data.map(item => {
-    const temp = format(item);
-    if (temp && item[key]) {
-      temp[key] = recursionConvert(item[key], format, key);
-    }
-    return temp;
-  }).filter(item => !!item);
+  return data
+    .map((item) => {
+      const temp = format(item);
+      if (temp && item[key]) {
+        temp[key] = recursionConvert(item[key], format, key);
+      }
+      return temp;
+    })
+    .filter((item) => !!item);
 }
 
 /*
  * 递归过滤
  */
 function recursionFilter(data = [], permission = 'ALL', key = 'children') {
-  return data.filter(item => {
+  return data.filter((item) => {
     if (permission === 'ALL' || item.meta.roles.includes('ALL') || item.meta.roles.includes(permission)) {
       if (item[key] && item[key].length > 0) {
         item[key] = recursionFilter(item[key], permission, key);
@@ -88,4 +90,11 @@ function recursionFilter(data = [], permission = 'ALL', key = 'children') {
   });
 }
 
-export { getMenuNameFromUrl, getMenuInfoFromUrl, getActiveTabInfo, recursionConvert, recursionFilter, getTreeDataByDeep };
+export {
+  getMenuNameFromUrl,
+  getMenuInfoFromUrl,
+  getActiveTabInfo,
+  recursionConvert,
+  recursionFilter,
+  getTreeDataByDeep,
+};
